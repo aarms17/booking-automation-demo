@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Booking Automation Demo — ES/EN/FR</title>
+  <style>
+    :root{--bg:#0b0f17;--card:#111827;--muted:#94a3b8;--text:#e5e7eb;--line:rgba(148,163,184,.18);--accent:#60a5fa;--accent2:#34d399;--r:16px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
+    .wrap{max-width:980px;margin:0 auto;padding:28px 16px 70px}
+    .card{background:rgba(17,24,39,.75);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+    .top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(11,15,23,.35);color:var(--text);text-decoration:none;font-weight:600;cursor:pointer}
+    .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#06101a;border-color:transparent}
+    h1{margin:10px 0 8px;font-size:clamp(28px,4vw,42px);line-height:1.1}
+    p{margin:0 0 14px;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+    @media(max-width:860px){.grid{grid-template-columns:1fr}}
+    .tile{border:1px solid var(--line);background:rgba(11,15,23,.35);border-radius:14px;padding:14px}
+    .tile b{display:block;margin-bottom:6px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .foot{margin-top:18px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .hidden{display:none}
+    .lang{display:flex;gap:8px;flex-wrap:wrap}
+    .pill{display:inline-flex;gap:8px;align-items:center;padding:8px 10px;border-radius:999px;background:rgba(96,165,250,.14);border:1px solid rgba(96,165,250,.25);color:#cfe7ff;font-size:13px;margin-top:10px}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="card">
+      <div class="top">
+        <div>
+          <b id="brand">Booking Automation Demo</b>
+          <div class="pill">Reservas automáticas • Confirmaciones • Recordatorios</div>
+        </div>
+
+        <div class="lang">
+          <button class="btn" onclick="setLang('es')">ES</button>
+          <button class="btn" onclick="setLang('en')">EN</button>
+          <button class="btn" onclick="setLang('fr')">FR</button>
+        </div>
+      </div>
+
+      <!-- ES (LatAm) -->
+      <div id="es">
+        <h1>Automatiza tus reservas con un sitio web trilingüe + confirmaciones.</h1>
+        <p>
+          Tus clientes reservan en segundos. Tú recibes la notificación al instante.
+          Menos mensajes, menos citas perdidas.
+        </p>
+
+        <div class="row">
+          <a class="btn primary" href="https://squareup.com/appointments" target="_blank" rel="noopener">Reservar ahora</a>
+          <a class="btn" href="mailto:demo@bookingautomation.ca?subject=Solicitud%20de%20reserva&body=Hola%2C%20quiero%20reservar.%0AServicio%3A%20%0AHorario%20preferido%3A%20">Pedir por correo</a>
+        </div>
+
+        <div class="grid">
+          <div class="tile"><b>Reservas 24/7</b><span>Incluso cuando estás ocupado.</span></div>
+          <div class="tile"><b>Confirmación rápida</b><span>Notificaciones por email/SMS.</span></div>
+          <div class="tile"><b>Menos “no-shows”</b><span>Recordatorios automáticos.</span></div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div id="en" class="hidden">
+        <h1>Automate bookings with a trilingual website + confirmations.</h1>
+        <p>
+          Clients book in seconds. You get notified instantly.
+          Less back-and-forth, fewer missed appointments.
+        </p>
+
+        <div class="row">
+          <a class="btn primary" href="https://squareup.com/appointments" target="_blank" rel="noopener">Book now</a>
+          <a class="btn" href="mailto:demo@bookingautomation.ca?subject=Booking%20request&body=Hi%2C%20I%20want%20to%20book.%0AService%3A%20%0APreferred%20time%3A%20">Request by email</a>
+        </div>
+
+        <div class="grid">
+          <div class="tile"><b>24/7 booking</b><span>Even when you’re busy.</span></div>
+          <div class="tile"><b>Instant confirmations</b><span>Email/SMS notifications.</span></div>
+          <div class="tile"><b>Fewer no-shows</b><span>Automated reminders.</span></div>
+        </div>
+      </div>
+
+      <!-- FR -->
+      <div id="fr" class="hidden">
+        <h1>Automatisez les réservations avec un site trilingue + confirmations.</h1>
+        <p>
+          Les clients réservent en quelques secondes. Vous êtes notifié immédiatement.
+          Moins d’allers-retours, moins de rendez-vous manqués.
+        </p>
+
+        <div class="row">
+          <a class="btn primary" href="https://squareup.com/appointments" target="_blank" rel="noopener">Réserver</a>
+          <a class="btn" href="mailto:demo@bookingautomation.ca?subject=Demande%20de%20r%C3%A9servation&body=Bonjour%2C%20je%20veux%20r%C3%A9server.%0AService%20%3A%20%0AHeure%20souhait%C3%A9e%20%3A%20">Demander par courriel</a>
+        </div>
+
+        <div class="grid">
+          <div class="tile"><b>Réservation 24/7</b><span>Même quand vous êtes occupé.</span></div>
+          <div class="tile"><b>Confirmations rapides</b><span>Notifications courriel/SMS.</span></div>
+          <div class="tile"><b>Moins d’absences</b><span>Rappels automatiques.</span></div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div>© <span id="year"></span> <span id="biz">Booking Automation Demo</span></div>
+        <div><a href="mailto:demo@bookingautomation.ca">demo@bookingautomation.ca</a></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function setLang(l){
+      document.getElementById("es").classList.toggle("hidden", l!=="es");
+      document.getElementById("en").classList.toggle("hidden", l!=="en");
+      document.getElementById("fr").classList.toggle("hidden", l!=="fr");
+      localStorage.setItem("lang", l);
+      document.documentElement.lang = l === "es" ? "es" : (l === "fr" ? "fr" : "en");
+    }
+
+    setLang(localStorage.getItem("lang") || "es");
+  </script>
+</body>
+</html>
