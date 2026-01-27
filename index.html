@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Booking Automation Demo â€” ES/EN/FR</title>
+  <title>Urban Beauty Studio (Demo) - ES/EN/FR</title>
   <style>
     :root{--bg:#0b0f17;--card:#111827;--muted:#94a3b8;--text:#e5e7eb;--line:rgba(148,163,184,.18);--accent:#60a5fa;--accent2:#34d399;--r:16px}
     *{box-sizing:border-box}
@@ -23,7 +23,6 @@
     .foot{margin-top:18px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
     .hidden{display:none}
     .lang{display:flex;gap:8px;flex-wrap:wrap}
-    .pill{display:inline-flex;gap:8px;align-items:center;padding:8px 10px;border-radius:999px;background:rgba(96,165,250,.14);border:1px solid rgba(96,165,250,.25);color:#cfe7ff;font-size:13px;margin-top:10px}
   </style>
 </head>
 <body>
@@ -31,7 +30,10 @@
     <div class="card">
       <div class="top">
         <div>
-          <b id="brand">Urban Beauty Studio (Demo)</b><div class="pill">Reservas automÃ¡ticas â€¢ Confirmaciones â€¢ Recordatorios</div>
+          <b>Urban Beauty Studio (Demo)</b>
+          <div style="margin-top:8px;color:#cfe7ff;font-size:13px;">
+            Automated bookings - confirmations - reminders
+          </div>
         </div>
 
         <div class="lang">
@@ -41,72 +43,59 @@
         </div>
       </div>
 
-      <!-- ES (LatAm) -->
+      <!-- ES (LatAm, sin acentos para evitar problemas) -->
       <div id="es">
-        <h1>Reserva tu cita en Urban Beauty Studio en segundos.</h1>       <p>
-  Ofrecemos servicios profesionales de belleza y cuidado personal.
-  Reserva tu cita fácilmente en línea y recibe confirmación inmediata.
-</p>
-<div class="grid">
-  <div class="tile"><b>Haircut & Styling</b><span>Modern cuts tailored to your style.</span></div> 
-  <div class="tile"><b>Beard Trim</b><span>Clean, precise beard grooming.</span></div>
-  <div class="tile"><b>Facial Treatment</b><span>Relaxing and professional skin care.</span></div>
-  <div class="tile"><b>Manicure & Pedicure</b><span>Complete nail care services.</span></div>
-  <div class="tile"><b>Consultation</b><span>Personalized beauty advice.</span></div>
-</div>
+        <h1>Reserva tu cita en segundos.</h1>
+        <p>Servicios de belleza y cuidado personal. Reserva en linea y recibe confirmacion automatica.</p>
+
         <div class="row">
           <a class="btn primary" href="https://squareup.com/appointments" target="_blank" rel="noopener">Reservar ahora</a>
-          <a class="btn" href="https://hook.us2.make.com/8551omw26k3kmet1s9at44jih6q93wne">Pedir por correo</a>
-        </div>
-
-       <div class="grid">
-  <div class="tile"><b>Reservas 24/7</b><span>Incluso cuando estas ocupado.</span></div>
-  <div class="tile"><b>Confirmacion rapida</b><span>Notificaciones por email y SMS.</span></div>
-  <div class="tile"><b>Menos no-shows</b><span>Recordatorios automaticos.</span></div>
-</div>
-
-      <!-- EN -->
-      <div id="en" class="hidden">
-        <h1>Automate bookings with a trilingual website + confirmations.</h1>
-        <p>
-          Clients book in seconds. You get notified instantly.
-          Less back-and-forth, fewer missed appointments.
-        </p>
-
-        <div class="row">
-          <a class="btn primary" href="https://squareup.com/appointments" target="_blank" rel="noopener">Book now</a>
-          <a class="btn" href="https://hook.us2.make.com/8551omw26k3kmet1s9at44jih6q93wne">Request by email</a>
+          <a class="btn" href="https://hook.us2.make.com/8551omw26k3kmet1s9at44jih6q93wne" target="_blank">Enviar solicitud</a>
         </div>
 
         <div class="grid">
-          <div class="tile"><b>24/7 booking</b><span>Even when youâ€™re busy.</span></div>
-          <div class="tile"><b>Instant confirmations</b><span>Email/SMS notifications.</span></div>
-          <div class="tile"><b>Fewer no-shows</b><span>Automated reminders.</span></div>
+          <div class="tile"><b>Haircut & Styling</b><span>Modern cuts tailored to your style.</span></div>
+          <div class="tile"><b>Beard Trim</b><span>Clean, precise beard grooming.</span></div>
+          <div class="tile"><b>Facial Treatment</b><span>Relaxing and professional skin care.</span></div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div id="en" class="hidden">
+        <h1>Book your appointment in seconds.</h1>
+        <p>Beauty and wellness services. Book online and get automatic confirmation.</p>
+
+        <div class="row">
+          <a class="btn primary" href="https://squareup.com/appointments" target="_blank" rel="noopener">Book now</a>
+          <a class="btn" href="https://hook.us2.make.com/8551omw26k3kmet1s9at44jih6q93wne" target="_blank">Send request</a>
+        </div>
+
+        <div class="grid">
+          <div class="tile"><b>Haircut & Styling</b><span>Modern cuts tailored to your style.</span></div>
+          <div class="tile"><b>Beard Trim</b><span>Clean, precise beard grooming.</span></div>
+          <div class="tile"><b>Facial Treatment</b><span>Relaxing and professional skin care.</span></div>
         </div>
       </div>
 
       <!-- FR -->
       <div id="fr" class="hidden">
-        <h1>Automatisez les rÃ©servations avec un site trilingue + confirmations.</h1>
-        <p>
-          Les clients rÃ©servent en quelques secondes. Vous Ãªtes notifiÃ© immÃ©diatement.
-          Moins dâ€™allers-retours, moins de rendez-vous manquÃ©s.
-        </p>
+        <h1>Reservez votre rendez-vous en quelques secondes.</h1>
+        <p>Services de beaute et bien-etre. Reservation en ligne avec confirmation automatique.</p>
 
         <div class="row">
-          <a class="btn primary" href="https://squareup.com/appointments" target="_blank" rel="noopener">RÃ©server</a>
-          <a class="btn" href="https://hook.us2.make.com/8551omw26k3kmet1s9at44jih6q93wne">Demander par courriel</a>
+          <a class="btn primary" href="https://squareup.com/appointments" target="_blank" rel="noopener">Reserver</a>
+          <a class="btn" href="https://hook.us2.make.com/8551omw26k3kmet1s9at44jih6q93wne" target="_blank">Envoyer une demande</a>
         </div>
 
         <div class="grid">
-          <div class="tile"><b>RÃ©servation 24/7</b><span>MÃªme quand vous Ãªtes occupÃ©.</span></div>
-          <div class="tile"><b>Confirmations rapides</b><span>Notifications courriel/SMS.</span></div>
-          <div class="tile"><b>Moins dâ€™absences</b><span>Rappels automatiques.</span></div>
+          <div class="tile"><b>Haircut & Styling</b><span>Modern cuts tailored to your style.</span></div>
+          <div class="tile"><b>Beard Trim</b><span>Clean, precise beard grooming.</span></div>
+          <div class="tile"><b>Facial Treatment</b><span>Relaxing and professional skin care.</span></div>
         </div>
       </div>
 
       <div class="foot">
-        <div>Â© <span id="year"></span> <span id="biz">Urban Beauty Studio (Demo)</span></div>
+        <div>© <span id="year"></span> Urban Beauty Studio (Demo)</div>
         <div><a href="mailto:demo@bookingautomation.ca">demo@bookingautomation.ca</a></div>
       </div>
     </div>
@@ -114,18 +103,13 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
-
     function setLang(l){
       document.getElementById("es").classList.toggle("hidden", l!=="es");
       document.getElementById("en").classList.toggle("hidden", l!=="en");
       document.getElementById("fr").classList.toggle("hidden", l!=="fr");
       localStorage.setItem("lang", l);
-      document.documentElement.lang = l === "es" ? "es" : (l === "fr" ? "fr" : "en");
     }
-
     setLang(localStorage.getItem("lang") || "es");
   </script>
 </body>
 </html>
-
-
