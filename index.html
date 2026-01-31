@@ -1,117 +1,536 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Urban Beauty Studio (Demo) - ES/EN/FR</title>
+  <title>Appointment Request - ES/EN/FR</title>
   <style>
-    :root{--bg:#0b0f17;--card:#111827;--muted:#94a3b8;--text:#e5e7eb;--line:rgba(148,163,184,.18);--accent:#60a5fa;--accent2:#34d399;--r:16px}
+    :root{
+      --bg:#0b0f17;
+      --card:#111827;
+      --muted:#94a3b8;
+      --text:#e5e7eb;
+      --line:rgba(148,163,184,.18);
+      --accent:#60a5fa;
+      --accent2:#34d399;
+      --r:18px;
+    }
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
     .wrap{max-width:980px;margin:0 auto;padding:28px 16px 70px}
-    .card{background:rgba(17,24,39,.75);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+    .card{background:rgba(17,24,39,.78);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
     .top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(11,15,23,.35);color:var(--text);text-decoration:none;font-weight:600;cursor:pointer}
+    .brand b{font-size:16px}
+    .pill{margin-top:6px;font-size:12px;color:#cfe7ff;opacity:.9}
+    .lang{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(11,15,23,.35);color:var(--text);text-decoration:none;font-weight:700;cursor:pointer}
     .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#06101a;border-color:transparent}
-    h1{margin:10px 0 8px;font-size:clamp(28px,4vw,42px);line-height:1.1}
-    p{margin:0 0 14px;color:var(--muted)}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    h1{margin:14px 0 10px;font-size:clamp(26px,4vw,40px);line-height:1.12}
+    p{margin:0 0 14px;color:var(--muted);line-height:1.5}
+    .note{font-size:13px;color:var(--muted);margin-top:8px}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
     @media(max-width:860px){.grid{grid-template-columns:1fr}}
     .tile{border:1px solid var(--line);background:rgba(11,15,23,.35);border-radius:14px;padding:14px}
     .tile b{display:block;margin-bottom:6px}
-    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
     .foot{margin-top:18px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
     .hidden{display:none}
-    .lang{display:flex;gap:8px;flex-wrap:wrap}
+    form{margin-top:14px}
+    .formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    @media(max-width:760px){.formgrid{grid-template-columns:1fr}}
+    label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}
+    input, select, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(11,15,23,.35);
+      color:var(--text);
+      outline:none;
+    }
+    textarea{min-height:96px;resize:vertical}
+    .status{
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(11,15,23,.35);
+      color:var(--text);
+      display:none;
+      line-height:1.4;
+    }
+    .status.ok{border-color:rgba(52,211,153,.35)}
+    .status.err{border-color:rgba(248,113,113,.35)}
+    .small{font-size:12px;color:var(--muted);margin-top:10px}
+    .divider{height:1px;background:var(--line);margin:16px 0}
+
+    /* Consent */
+    .consent{
+      margin-top:12px;
+      border:1px solid var(--line);
+      background:rgba(11,15,23,.35);
+      border-radius:14px;
+      padding:12px 12px;
+    }
+    .consentRow{display:flex;gap:10px;align-items:flex-start}
+    .consent input[type="checkbox"]{width:auto;margin-top:3px}
+    .consentText{font-size:12px;color:var(--muted);line-height:1.4}
+    .consentText b{color:var(--text)}
   </style>
 </head>
 <body>
   <main class="wrap">
     <div class="card">
       <div class="top">
-        <div>
-          <b>Urban Beauty Studio (Demo)</b>
-          <div style="margin-top:8px;color:#cfe7ff;font-size:13px;">
-            Automated bookings - confirmations - reminders
-          </div>
+        <div class="brand">
+          <b id="bizNameTop">Your Business (Demo)</b>
+          <div class="pill" id="bizPill">Appointment requests - approval - reminders</div>
         </div>
 
         <div class="lang">
-          <button class="btn" onclick="setLang('es')">ES</button>
-          <button class="btn" onclick="setLang('en')">EN</button>
-          <button class="btn" onclick="setLang('fr')">FR</button>
+          <button class="btn" type="button" onclick="setLang('es')">ES</button>
+          <button class="btn" type="button" onclick="setLang('en')">EN</button>
+          <button class="btn" type="button" onclick="setLang('fr')">FR</button>
         </div>
       </div>
 
-      <!-- ES (LatAm, sin acentos para evitar problemas) -->
-      <div id="es">
-        <h1>Reserva tu cita en segundos.</h1>
-        <p>Servicios de belleza y cuidado personal. Reserva en linea y recibe confirmacion automatica.</p>
+      <!-- ES -->
+      <section id="es">
+        <h1>Solicita tu cita en minutos</h1>
+        <p>
+          Las citas se confirman despues de revision del negocio.
+          Envia tu solicitud con fecha y hora preferidas, y te confirmamos por mensaje o correo.
+        </p>
 
-        <div class="row">
-          <a class="btn primary" href="https://squareup.com/appointments" target="_blank" rel="noopener">Reservar ahora</a>
-          <a class="btn" href="https://hook.us2.make.com/t3ow8bf3bdvuk6igyg51l3k5hf18wb4w" target="_blank">Enviar solicitud</a>
+        <div class="tile">
+          <b>Importante</b>
+          <span>
+            Tu horario se confirma sujeto a disponibilidad. Si no hay espacio, te proponemos otra hora.
+          </span>
         </div>
+
+        <form id="requestFormEs" onsubmit="return submitRequest(event, 'es')">
+          <div class="formgrid">
+            <div>
+              <label for="nameEs">Nombre completo *</label>
+              <input id="nameEs" name="name" placeholder="Tu nombre" required />
+            </div>
+            <div>
+              <label for="phoneEs">Telefono *</label>
+              <input id="phoneEs" name="phone" placeholder="Ej: 5141234567" required />
+            </div>
+
+            <div>
+              <label for="emailEs">Email (Gmail u otro) *</label>
+              <input id="emailEs" name="email" type="email" placeholder="tunombre@gmail.com" required />
+            </div>
+            <div>
+              <label for="serviceEs">Servicio (opcional)</label>
+              <select id="serviceEs" name="service">
+                <option value="">Selecciona (opcional)</option>
+                <option>Corte</option>
+                <option>Barba</option>
+                <option>Facial</option>
+                <option>Unas</option>
+                <option>Pestanas</option>
+                <option>Otro</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="dateEs">Fecha preferida *</label>
+              <input id="dateEs" name="date" type="date" required />
+            </div>
+            <div>
+              <label for="timeEs">Hora preferida *</label>
+              <input id="timeEs" name="time" type="time" required />
+            </div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <label for="noteEs">Nota (opcional)</label>
+            <textarea id="noteEs" name="note" placeholder="Ej: Quiero con X barbero, o necesito 2 servicios..."></textarea>
+          </div>
+
+          <!-- Consent SMS -->
+          <div class="consent">
+            <div class="consentRow">
+              <input id="smsOkEs" name="sms_consent" type="checkbox" required />
+              <div class="consentText">
+                <b>Acepto recibir SMS</b> solo para <b>confirmacion y recordatorios</b> de mi cita.
+                No enviamos spam.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn primary" id="sendBtnEs" type="submit">Enviar solicitud</button>
+            <button class="btn" type="button" onclick="fillExample('es')">Llenar ejemplo</button>
+          </div>
+
+          <div class="note">La cita no se confirma automaticamente.</div>
+          <div class="status" id="statusEs"></div>
+          <div class="small">
+            Zona horaria: America/Montreal. ID de solicitud: <span id="reqIdEs"></span>
+          </div>
+        </form>
+
+        <div class="divider"></div>
 
         <div class="grid">
-          <div class="tile"><b>Haircut & Styling</b><span>Modern cuts tailored to your style.</span></div>
-          <div class="tile"><b>Beard Trim</b><span>Clean, precise beard grooming.</span></div>
-          <div class="tile"><b>Facial Treatment</b><span>Relaxing and professional skin care.</span></div>
+          <div class="tile"><b>Control del negocio</b><span>El negocio confirma o propone otro horario.</span></div>
+          <div class="tile"><b>Menos citas perdidas</b><span>Recordatorios por SMS/email (si el negocio los activa).</span></div>
+          <div class="tile"><b>Todo registrado</b><span>La solicitud queda guardada para seguimiento.</span></div>
         </div>
-      </div>
+      </section>
 
       <!-- EN -->
-      <div id="en" class="hidden">
-        <h1>Book your appointment in seconds.</h1>
-        <p>Beauty and wellness services. Book online and get automatic confirmation.</p>
+      <section id="en" class="hidden">
+        <h1>Request your appointment in minutes</h1>
+        <p>
+          Appointments are confirmed after the business reviews availability.
+          Send your preferred date and time, and we will confirm by text or email.
+        </p>
 
-        <div class="row">
-          <a class="btn primary" href="https://squareup.com/appointments" target="_blank" rel="noopener">Book now</a>
-          <a class="btn" href="https://hook.us2.make.com/t3ow8bf3bdvuk6igyg51l3k5hf18wb4w" target="_blank">Send request</a>
+        <div class="tile">
+          <b>Important</b>
+          <span>Your time is confirmed subject to availability. If unavailable, we will propose another time.</span>
         </div>
+
+        <form id="requestFormEn" onsubmit="return submitRequest(event, 'en')">
+          <div class="formgrid">
+            <div>
+              <label for="nameEn">Full name *</label>
+              <input id="nameEn" name="name" placeholder="Your name" required />
+            </div>
+            <div>
+              <label for="phoneEn">Phone *</label>
+              <input id="phoneEn" name="phone" placeholder="e.g. 5141234567" required />
+            </div>
+
+            <div>
+              <label for="emailEn">Email *</label>
+              <input id="emailEn" name="email" type="email" placeholder="you@gmail.com" required />
+            </div>
+            <div>
+              <label for="serviceEn">Service (optional)</label>
+              <select id="serviceEn" name="service">
+                <option value="">Select (optional)</option>
+                <option>Haircut</option>
+                <option>Beard</option>
+                <option>Facial</option>
+                <option>Nails</option>
+                <option>Lashes</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="dateEn">Preferred date *</label>
+              <input id="dateEn" name="date" type="date" required />
+            </div>
+            <div>
+              <label for="timeEn">Preferred time *</label>
+              <input id="timeEn" name="time" type="time" required />
+            </div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <label for="noteEn">Notes (optional)</label>
+            <textarea id="noteEn" name="note" placeholder="e.g. Specific staff, multiple services, etc."></textarea>
+          </div>
+
+          <!-- Consent SMS -->
+          <div class="consent">
+            <div class="consentRow">
+              <input id="smsOkEn" name="sms_consent" type="checkbox" required />
+              <div class="consentText">
+                <b>I agree to receive SMS</b> only for <b>appointment confirmation and reminders</b>.
+                No spam.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn primary" id="sendBtnEn" type="submit">Send request</button>
+            <button class="btn" type="button" onclick="fillExample('en')">Fill example</button>
+          </div>
+
+          <div class="note">This does not auto-confirm your appointment.</div>
+          <div class="status" id="statusEn"></div>
+          <div class="small">
+            Time zone: America/Montreal. Request ID: <span id="reqIdEn"></span>
+          </div>
+        </form>
+
+        <div class="divider"></div>
 
         <div class="grid">
-          <div class="tile"><b>Haircut & Styling</b><span>Modern cuts tailored to your style.</span></div>
-          <div class="tile"><b>Beard Trim</b><span>Clean, precise beard grooming.</span></div>
-          <div class="tile"><b>Facial Treatment</b><span>Relaxing and professional skin care.</span></div>
+          <div class="tile"><b>Business approval</b><span>They confirm or propose another time.</span></div>
+          <div class="tile"><b>Fewer no-shows</b><span>SMS/email reminders (if enabled).</span></div>
+          <div class="tile"><b>Everything logged</b><span>Your request is saved for follow-up.</span></div>
         </div>
-      </div>
+      </section>
 
       <!-- FR -->
-      <div id="fr" class="hidden">
-        <h1>Reservez votre rendez-vous en quelques secondes.</h1>
-        <p>Services de beaute et bien-etre. Reservation en ligne avec confirmation automatique.</p>
+      <section id="fr" class="hidden">
+        <h1>Demandez votre rendez-vous en quelques minutes</h1>
+        <p>
+          Les rendez-vous sont confirmes apres verification par l entreprise.
+          Envoyez votre date et heure preferees, puis nous confirmons par SMS ou email.
+        </p>
 
-        <div class="row">
-          <a class="btn primary" href="https://squareup.com/appointments" target="_blank" rel="noopener">Reserver</a>
-          <a class="btn" href="https://hook.us2.make.com/t3ow8bf3bdvuk6igyg51l3k5hf18wb4w" target="_blank">Envoyer une demande</a>
+        <div class="tile">
+          <b>Important</b>
+          <span>Votre horaire est confirme selon disponibilite. Si indisponible, nous proposerons une autre heure.</span>
         </div>
+
+        <form id="requestFormFr" onsubmit="return submitRequest(event, 'fr')">
+          <div class="formgrid">
+            <div>
+              <label for="nameFr">Nom complet *</label>
+              <input id="nameFr" name="name" placeholder="Votre nom" required />
+            </div>
+            <div>
+              <label for="phoneFr">Telephone *</label>
+              <input id="phoneFr" name="phone" placeholder="ex: 5141234567" required />
+            </div>
+
+            <div>
+              <label for="emailFr">Email *</label>
+              <input id="emailFr" name="email" type="email" placeholder="vous@gmail.com" required />
+            </div>
+            <div>
+              <label for="serviceFr">Service (optionnel)</label>
+              <select id="serviceFr" name="service">
+                <option value="">Choisir (optionnel)</option>
+                <option>Coupe</option>
+                <option>Barbe</option>
+                <option>Soin visage</option>
+                <option>Ongles</option>
+                <option>Cils</option>
+                <option>Autre</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="dateFr">Date preferee *</label>
+              <input id="dateFr" name="date" type="date" required />
+            </div>
+            <div>
+              <label for="timeFr">Heure preferee *</label>
+              <input id="timeFr" name="time" type="time" required />
+            </div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <label for="noteFr">Note (optionnel)</label>
+            <textarea id="noteFr" name="note" placeholder="ex: personnel specifique, plusieurs services..."></textarea>
+          </div>
+
+          <!-- Consent SMS -->
+          <div class="consent">
+            <div class="consentRow">
+              <input id="smsOkFr" name="sms_consent" type="checkbox" required />
+              <div class="consentText">
+                <b>J accepte de recevoir des SMS</b> uniquement pour <b>confirmation et rappels</b> du rendez-vous.
+                Pas de spam.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn primary" id="sendBtnFr" type="submit">Envoyer la demande</button>
+            <button class="btn" type="button" onclick="fillExample('fr')">Remplir exemple</button>
+          </div>
+
+          <div class="note">Ceci ne confirme pas automatiquement le rendez-vous.</div>
+          <div class="status" id="statusFr"></div>
+          <div class="small">
+            Fuseau horaire: America/Montreal. ID demande: <span id="reqIdFr"></span>
+          </div>
+        </form>
+
+        <div class="divider"></div>
 
         <div class="grid">
-          <div class="tile"><b>Haircut & Styling</b><span>Modern cuts tailored to your style.</span></div>
-          <div class="tile"><b>Beard Trim</b><span>Clean, precise beard grooming.</span></div>
-          <div class="tile"><b>Facial Treatment</b><span>Relaxing and professional skin care.</span></div>
+          <div class="tile"><b>Validation</b><span>L entreprise confirme ou propose un autre horaire.</span></div>
+          <div class="tile"><b>Moins d absences</b><span>Rappels SMS/email (si actives).</span></div>
+          <div class="tile"><b>Historique</b><span>La demande est enregistree pour suivi.</span></div>
         </div>
-      </div>
+      </section>
 
       <div class="foot">
-        <div>© <span id="year"></span> Urban Beauty Studio (Demo)</div>
+        <div>© <span id="year"></span> <span id="bizNameBottom">Your Business (Demo)</span></div>
         <div><a href="mailto:demo@bookingautomation.ca">demo@bookingautomation.ca</a></div>
       </div>
     </div>
   </main>
 
   <script>
+    // === CONFIG ===
+    const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/t3ow8bf3bdvuk6igyg51l3k5hf18wb4w";
+    const BUSINESS_NAME = "Your Business (Demo)"; // cambia aqui cuando tengas cliente
+    const TIME_ZONE = "America/Montreal";
+
+    // Set business name + year
+    document.getElementById("bizNameTop").textContent = BUSINESS_NAME;
+    document.getElementById("bizNameBottom").textContent = BUSINESS_NAME;
     document.getElementById("year").textContent = new Date().getFullYear();
+
     function setLang(l){
       document.getElementById("es").classList.toggle("hidden", l!=="es");
       document.getElementById("en").classList.toggle("hidden", l!=="en");
       document.getElementById("fr").classList.toggle("hidden", l!=="fr");
       localStorage.setItem("lang", l);
+      document.documentElement.lang = l;
+      // refresh request IDs shown in the UI
+      refreshRequestIds();
     }
     setLang(localStorage.getItem("lang") || "es");
+
+    function getForm(lang){
+      if(lang === "es") return document.getElementById("requestFormEs");
+      if(lang === "en") return document.getElementById("requestFormEn");
+      return document.getElementById("requestFormFr");
+    }
+    function getStatus(lang){
+      if(lang === "es") return document.getElementById("statusEs");
+      if(lang === "en") return document.getElementById("statusEn");
+      return document.getElementById("statusFr");
+    }
+    function getSendBtn(lang){
+      if(lang === "es") return document.getElementById("sendBtnEs");
+      if(lang === "en") return document.getElementById("sendBtnEn");
+      return document.getElementById("sendBtnFr");
+    }
+    function getReqIdSpan(lang){
+      if(lang === "es") return document.getElementById("reqIdEs");
+      if(lang === "en") return document.getElementById("reqIdEn");
+      return document.getElementById("reqIdFr");
+    }
+
+    // Create a stable-ish unique request id per page load and per submission
+    function newRequestId(){
+      // example: req_20260131_1a2b3c4d
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,'0');
+      const day = String(d.getDate()).padStart(2,'0');
+      const rand = Math.random().toString(16).slice(2,10);
+      return `req_${y}${m}${day}_${rand}`;
+    }
+
+    // For display only (changes when language changes)
+    function refreshRequestIds(){
+      const current = newRequestId();
+      ["es","en","fr"].forEach(l => {
+        getReqIdSpan(l).textContent = current;
+      });
+    }
+    refreshRequestIds();
+
+    function fillExample(lang){
+      const f = getForm(lang);
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth()+1).padStart(2,'0');
+      const dd = String(today.getDate()+1).padStart(2,'0'); // tomorrow
+      f.querySelector('[name="name"]').value = (lang==="fr") ? "Jean Dupont" : (lang==="en" ? "John Smith" : "Juan Perez");
+      f.querySelector('[name="phone"]').value = "5141234567";
+      f.querySelector('[name="email"]').value = "client@example.com";
+      f.querySelector('[name="service"]').value = (lang==="en") ? "Haircut" : (lang==="fr" ? "Coupe" : "Corte");
+      f.querySelector('[name="date"]').value = `${yyyy}-${mm}-${dd}`;
+      f.querySelector('[name="time"]').value = "16:00";
+      f.querySelector('[name="note"]').value = (lang==="en")
+        ? "First time. Please confirm availability."
+        : (lang==="fr" ? "Premiere visite. Merci de confirmer la disponibilite." : "Primera vez. Por favor confirma disponibilidad.");
+      f.querySelector('[name="sms_consent"]').checked = true;
+    }
+
+    async function submitRequest(event, lang){
+      event.preventDefault();
+
+      const form = getForm(lang);
+      const status = getStatus(lang);
+      const btn = getSendBtn(lang);
+
+      // NEW request id per submission
+      const request_id = newRequestId();
+      ["es","en","fr"].forEach(l => getReqIdSpan(l).textContent = request_id);
+
+      const data = {
+        request_id,
+        business_name: BUSINESS_NAME,
+        lang: lang,
+        time_zone: TIME_ZONE,
+        sms_consent: !!form.querySelector('[name="sms_consent"]').checked,
+
+        name: form.querySelector('[name="name"]').value.trim(),
+        phone: form.querySelector('[name="phone"]').value.trim(),
+        email: form.querySelector('[name="email"]').value.trim(),
+        service: form.querySelector('[name="service"]').value,
+        date: form.querySelector('[name="date"]').value,
+        time: form.querySelector('[name="time"]').value,
+        note: form.querySelector('[name="note"]').value.trim(),
+
+        status: "pending",
+        source: "website",
+        submitted_at_iso: new Date().toISOString()
+      };
+
+      // validation
+      if(!data.name || !data.phone || !data.email || !data.date || !data.time || !data.sms_consent){
+        status.className = "status err";
+        status.style.display = "block";
+        status.textContent = (lang==="en")
+          ? "Please complete the required fields and consent to SMS reminders."
+          : (lang==="fr" ? "Veuillez remplir les champs obligatoires et accepter les SMS de rappel." : "Completa los campos obligatorios y acepta los SMS de recordatorio.");
+        return false;
+      }
+
+      btn.disabled = true;
+      status.className = "status";
+      status.style.display = "block";
+      status.textContent = (lang==="en")
+        ? "Sending request..."
+        : (lang==="fr" ? "Envoi en cours..." : "Enviando solicitud...");
+
+      try{
+        const res = await fetch(MAKE_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        if(!res.ok){
+          throw new Error("HTTP " + res.status);
+        }
+
+        status.className = "status ok";
+        status.textContent = (lang==="en")
+          ? "Request sent! We will confirm by SMS or email soon."
+          : (lang==="fr" ? "Demande envoyee! Nous confirmerons bientot par SMS ou email." : "Solicitud enviada! Te confirmamos pronto por SMS o correo.");
+
+        form.reset();
+        refreshRequestIds();
+      }catch(err){
+        status.className = "status err";
+        status.textContent = (lang==="en")
+          ? "Something went wrong. Please try again or contact us."
+          : (lang==="fr" ? "Un probleme est survenu. Reessayez ou contactez-nous." : "Algo salio mal. Intenta de nuevo o contactanos.");
+        console.error(err);
+      }finally{
+        btn.disabled = false;
+      }
+
+      return false;
+    }
   </script>
 </body>
 </html>
+
+
 
 
