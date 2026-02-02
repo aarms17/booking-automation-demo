@@ -65,7 +65,6 @@
     .small{font-size:12px;color:var(--muted);margin-top:10px}
     .divider{height:1px;background:var(--line);margin:16px 0}
 
-    /* Consent */
     .consent{
       margin-top:12px;
       border:1px solid var(--line);
@@ -153,7 +152,6 @@
             <textarea id="noteEs" name="note" placeholder="Ej: Quiero con X barbero, o necesito 2 servicios..."></textarea>
           </div>
 
-          <!-- Consent SMS -->
           <div class="consent">
             <div class="consentRow">
               <input id="smsOkEs" name="sms_consent" type="checkbox" required />
@@ -241,7 +239,6 @@
             <textarea id="noteEn" name="note" placeholder="e.g. Specific staff, multiple services, etc."></textarea>
           </div>
 
-          <!-- Consent SMS -->
           <div class="consent">
             <div class="consentRow">
               <input id="smsOkEn" name="sms_consent" type="checkbox" required />
@@ -329,7 +326,6 @@
             <textarea id="noteFr" name="note" placeholder="ex: personnel specifique, plusieurs services..."></textarea>
           </div>
 
-          <!-- Consent SMS -->
           <div class="consent">
             <div class="consentRow">
               <input id="smsOkFr" name="sms_consent" type="checkbox" required />
@@ -370,11 +366,15 @@
 
   <script>
     // === CONFIG ===
+    // Escenario 1 (Solicitud): Web -> Google Sheets -> Email dueño
     const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/4bm782apuqg9sc2gg4akzv4melboyftv";
-    const BUSINESS_NAME = "Your Business (Demo)"; // cambia aqui cuando tengas cliente
+
+    // Escenario 2 (Decision dueño): Aceptar/Rechazar (este NO se usa en fetch)
+    const APPROVAL_WEBHOOK_URL = "https://hook.us2.make.com/jmx9nuvh7fr4ag262sff0mwy8acw2cep";
+
+    const BUSINESS_NAME = "Your Business (Demo)";
     const TIME_ZONE = "America/Montreal";
 
-    // Set business name + year
     document.getElementById("bizNameTop").textContent = BUSINESS_NAME;
     document.getElementById("bizNameBottom").textContent = BUSINESS_NAME;
     document.getElementById("year").textContent = new Date().getFullYear();
@@ -385,7 +385,6 @@
       document.getElementById("fr").classList.toggle("hidden", l!=="fr");
       localStorage.setItem("lang", l);
       document.documentElement.lang = l;
-      // refresh request IDs shown in the UI
       refreshRequestIds();
     }
     setLang(localStorage.getItem("lang") || "es");
@@ -411,9 +410,7 @@
       return document.getElementById("reqIdFr");
     }
 
-    // Create a stable-ish unique request id per page load and per submission
     function newRequestId(){
-      // example: req_20260131_1a2b3c4d
       const d = new Date();
       const y = d.getFullYear();
       const m = String(d.getMonth()+1).padStart(2,'0');
@@ -422,7 +419,6 @@
       return `req_${y}${m}${day}_${rand}`;
     }
 
-    // For display only (changes when language changes)
     function refreshRequestIds(){
       const current = newRequestId();
       ["es","en","fr"].forEach(l => {
@@ -436,7 +432,8 @@
       const today = new Date();
       const yyyy = today.getFullYear();
       const mm = String(today.getMonth()+1).padStart(2,'0');
-      const dd = String(today.getDate()+1).padStart(2,'0'); // tomorrow
+      const dd = String(today.getDate()+1).padStart(2,'0');
+
       f.querySelector('[name="name"]').value = (lang==="fr") ? "Jean Dupont" : (lang==="en" ? "John Smith" : "Juan Perez");
       f.querySelector('[name="phone"]').value = "5141234567";
       f.querySelector('[name="email"]').value = "client@example.com";
@@ -456,7 +453,6 @@
       const status = getStatus(lang);
       const btn = getSendBtn(lang);
 
-      // NEW request id per submission
       const request_id = newRequestId();
       ["es","en","fr"].forEach(l => getReqIdSpan(l).textContent = request_id);
 
@@ -480,7 +476,6 @@
         submitted_at_iso: new Date().toISOString()
       };
 
-      // validation
       if(!data.name || !data.phone || !data.email || !data.date || !data.time || !data.sms_consent){
         status.className = "status err";
         status.style.display = "block";
@@ -498,7 +493,7 @@
         : (lang==="fr" ? "Envoi en cours..." : "Enviando solicitud...");
 
       try{
-        const res = await fetch(https://hook.us2.make.com/4bm782apuqg9sc2gg4akzv4melboyftv, {
+        const res = await fetch(MAKE_WEBHOOK_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
@@ -530,5 +525,3 @@
   </script>
 </body>
 </html>
-
-
