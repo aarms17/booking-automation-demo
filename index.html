@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Appointment Request - ES/EN/FR</title>
+  <title>Appointment Request — EN/ES/FR</title>
+  <meta name="description" content="Send an appointment request. The business reviews and confirms by SMS/email." />
   <style>
     :root{
       --bg:#0b0f17;
@@ -13,24 +14,27 @@
       --line:rgba(148,163,184,.18);
       --accent:#60a5fa;
       --accent2:#34d399;
+      --danger:#f87171;
+      --ok:#34d399;
       --r:18px;
     }
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
-    .wrap{max-width:980px;margin:0 auto;padding:28px 16px 70px}
-    .card{background:rgba(17,24,39,.78);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:radial-gradient(1200px 800px at 20% -10%, rgba(96,165,250,.20), transparent 60%),
+                                          radial-gradient(1200px 800px at 100% 10%, rgba(52,211,153,.18), transparent 55%),
+                                          var(--bg);color:var(--text)}
+    .wrap{max-width:1040px;margin:0 auto;padding:28px 16px 70px}
+    .card{background:rgba(17,24,39,.82);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:0 14px 60px rgba(0,0,0,.35)}
     .top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
-    .brand b{font-size:16px}
-    .pill{margin-top:6px;font-size:12px;color:#cfe7ff;opacity:.9}
+    .brand b{font-size:16px;letter-spacing:.2px}
+    .pill{margin-top:6px;font-size:12px;color:#cfe7ff;opacity:.95}
     .lang{display:flex;gap:8px;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(11,15,23,.35);color:var(--text);text-decoration:none;font-weight:700;cursor:pointer}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(11,15,23,.35);color:var(--text);text-decoration:none;font-weight:700;cursor:pointer;user-select:none}
     .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#06101a;border-color:transparent}
     .btn:disabled{opacity:.6;cursor:not-allowed}
     h1{margin:14px 0 10px;font-size:clamp(26px,4vw,40px);line-height:1.12}
-    p{margin:0 0 14px;color:var(--muted);line-height:1.5}
-    .note{font-size:13px;color:var(--muted);margin-top:8px}
+    p{margin:0 0 14px;color:var(--muted);line-height:1.55}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
-    @media(max-width:860px){.grid{grid-template-columns:1fr}}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
     .tile{border:1px solid var(--line);background:rgba(11,15,23,.35);border-radius:14px;padding:14px}
     .tile b{display:block;margin-bottom:6px}
     .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
@@ -38,7 +42,7 @@
     .hidden{display:none}
     form{margin-top:14px}
     .formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-    @media(max-width:760px){.formgrid{grid-template-columns:1fr}}
+    @media(max-width:820px){.formgrid{grid-template-columns:1fr}}
     label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}
     input, select, textarea{
       width:100%;
@@ -50,6 +54,7 @@
       outline:none;
     }
     textarea{min-height:96px;resize:vertical}
+    .divider{height:1px;background:var(--line);margin:16px 0}
     .status{
       margin-top:12px;
       padding:12px 14px;
@@ -59,12 +64,11 @@
       color:var(--text);
       display:none;
       line-height:1.4;
+      font-size:14px;
     }
     .status.ok{border-color:rgba(52,211,153,.35)}
     .status.err{border-color:rgba(248,113,113,.35)}
     .small{font-size:12px;color:var(--muted);margin-top:10px}
-    .divider{height:1px;background:var(--line);margin:16px 0}
-
     .consent{
       margin-top:12px;
       border:1px solid var(--line);
@@ -76,6 +80,12 @@
     .consent input[type="checkbox"]{width:auto;margin-top:3px}
     .consentText{font-size:12px;color:var(--muted);line-height:1.4}
     .consentText b{color:var(--text)}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:12px;color:var(--muted);
+      padding:8px 10px;border:1px solid var(--line);border-radius:999px;
+      background:rgba(11,15,23,.35);
+    }
   </style>
 </head>
 <body>
@@ -83,117 +93,28 @@
     <div class="card">
       <div class="top">
         <div class="brand">
-          <b id="bizNameTop">Your Business (Demo)</b>
-          <div class="pill" id="bizPill">Appointment requests - approval - reminders</div>
+          <b id="bizNameTop">Booking Automation (Demo)</b>
+          <div class="pill" id="bizPill">Requests • Approval • Reminders</div>
         </div>
 
         <div class="lang">
-          <button class="btn" type="button" onclick="setLang('es')">ES</button>
           <button class="btn" type="button" onclick="setLang('en')">EN</button>
+          <button class="btn" type="button" onclick="setLang('es')">ES</button>
           <button class="btn" type="button" onclick="setLang('fr')">FR</button>
         </div>
       </div>
 
-      <!-- ES -->
-      <section id="es">
-        <h1>Solicita tu cita en minutos</h1>
-        <p>
-          Las citas se confirman despues de revision del negocio.
-          Envia tu solicitud con fecha y hora preferidas, y te confirmamos por mensaje o correo.
-        </p>
-
-        <div class="tile">
-          <b>Importante</b>
-          <span>
-            Tu horario se confirma sujeto a disponibilidad. Si no hay espacio, te proponemos otra hora.
-          </span>
-        </div>
-
-        <form id="requestFormEs" onsubmit="return submitRequest(event, 'es')">
-          <div class="formgrid">
-            <div>
-              <label for="nameEs">Nombre completo *</label>
-              <input id="nameEs" name="name" placeholder="Tu nombre" required />
-            </div>
-            <div>
-              <label for="phoneEs">Telefono *</label>
-              <input id="phoneEs" name="phone" placeholder="Ej: 5141234567" required />
-            </div>
-
-            <div>
-              <label for="emailEs">Email (Gmail u otro) *</label>
-              <input id="emailEs" name="email" type="email" placeholder="tunombre@gmail.com" required />
-            </div>
-            <div>
-              <label for="serviceEs">Servicio (opcional)</label>
-              <select id="serviceEs" name="service">
-                <option value="">Selecciona (opcional)</option>
-                <option>Corte</option>
-                <option>Barba</option>
-                <option>Facial</option>
-                <option>Unas</option>
-                <option>Pestanas</option>
-                <option>Otro</option>
-              </select>
-            </div>
-
-            <div>
-              <label for="dateEs">Fecha preferida *</label>
-              <input id="dateEs" name="date" type="date" required />
-            </div>
-            <div>
-              <label for="timeEs">Hora preferida *</label>
-              <input id="timeEs" name="time" type="time" required />
-            </div>
-          </div>
-
-          <div style="margin-top:12px;">
-            <label for="noteEs">Nota (opcional)</label>
-            <textarea id="noteEs" name="note" placeholder="Ej: Quiero con X barbero, o necesito 2 servicios..."></textarea>
-          </div>
-
-          <div class="consent">
-            <div class="consentRow">
-              <input id="smsOkEs" name="sms_consent" type="checkbox" required />
-              <div class="consentText">
-                <b>Acepto recibir SMS</b> solo para <b>confirmacion y recordatorios</b> de mi cita.
-                No enviamos spam.
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <button class="btn primary" id="sendBtnEs" type="submit">Enviar solicitud</button>
-            <button class="btn" type="button" onclick="fillExample('es')">Llenar ejemplo</button>
-          </div>
-
-          <div class="note">La cita no se confirma automaticamente.</div>
-          <div class="status" id="statusEs"></div>
-          <div class="small">
-            Zona horaria: America/Montreal. ID de solicitud: <span id="reqIdEs"></span>
-          </div>
-        </form>
-
-        <div class="divider"></div>
-
-        <div class="grid">
-          <div class="tile"><b>Control del negocio</b><span>El negocio confirma o propone otro horario.</span></div>
-          <div class="tile"><b>Menos citas perdidas</b><span>Recordatorios por SMS/email (si el negocio los activa).</span></div>
-          <div class="tile"><b>Todo registrado</b><span>La solicitud queda guardada para seguimiento.</span></div>
-        </div>
-      </section>
-
       <!-- EN -->
-      <section id="en" class="hidden">
-        <h1>Request your appointment in minutes</h1>
+      <section id="en">
+        <h1>Request an appointment in minutes</h1>
         <p>
-          Appointments are confirmed after the business reviews availability.
-          Send your preferred date and time, and we will confirm by text or email.
+          Your request is reviewed by the business before it’s confirmed.
+          You’ll receive confirmation and reminders by SMS/email (no spam).
         </p>
 
-        <div class="tile">
-          <b>Important</b>
-          <span>Your time is confirmed subject to availability. If unavailable, we will propose another time.</span>
+        <div class="row">
+          <span class="badge">Time zone: <b style="color:var(--text)">America/Montreal</b></span>
+          <span class="badge">Request ID: <b style="color:var(--text)" id="reqIdEn"></b></span>
         </div>
 
         <form id="requestFormEn" onsubmit="return submitRequest(event, 'en')">
@@ -204,7 +125,7 @@
             </div>
             <div>
               <label for="phoneEn">Phone *</label>
-              <input id="phoneEn" name="phone" placeholder="e.g. 5141234567" required />
+              <input id="phoneEn" name="phone" inputmode="tel" placeholder="e.g. 5141234567" required />
             </div>
 
             <div>
@@ -220,6 +141,7 @@
                 <option>Facial</option>
                 <option>Nails</option>
                 <option>Lashes</option>
+                <option>Consultation</option>
                 <option>Other</option>
               </select>
             </div>
@@ -236,15 +158,14 @@
 
           <div style="margin-top:12px;">
             <label for="noteEn">Notes (optional)</label>
-            <textarea id="noteEn" name="note" placeholder="e.g. Specific staff, multiple services, etc."></textarea>
+            <textarea id="noteEn" name="note" placeholder="e.g. specific staff, multiple services, special requests..."></textarea>
           </div>
 
           <div class="consent">
             <div class="consentRow">
               <input id="smsOkEn" name="sms_consent" type="checkbox" required />
               <div class="consentText">
-                <b>I agree to receive SMS</b> only for <b>appointment confirmation and reminders</b>.
-                No spam.
+                <b>I agree to receive SMS</b> only for <b>appointment confirmation and reminders</b>. No spam.
               </div>
             </div>
           </div>
@@ -254,19 +175,100 @@
             <button class="btn" type="button" onclick="fillExample('en')">Fill example</button>
           </div>
 
-          <div class="note">This does not auto-confirm your appointment.</div>
+          <div class="small">This does not auto-confirm your appointment.</div>
           <div class="status" id="statusEn"></div>
-          <div class="small">
-            Time zone: America/Montreal. Request ID: <span id="reqIdEn"></span>
-          </div>
         </form>
 
         <div class="divider"></div>
 
         <div class="grid">
           <div class="tile"><b>Business approval</b><span>They confirm or propose another time.</span></div>
-          <div class="tile"><b>Fewer no-shows</b><span>SMS/email reminders (if enabled).</span></div>
+          <div class="tile"><b>Fewer no-shows</b><span>Reminders by SMS/email (if enabled).</span></div>
           <div class="tile"><b>Everything logged</b><span>Your request is saved for follow-up.</span></div>
+        </div>
+      </section>
+
+      <!-- ES -->
+      <section id="es" class="hidden">
+        <h1>Solicita tu cita en minutos</h1>
+        <p>
+          Tu solicitud se revisa antes de confirmarse.
+          Recibirás confirmación y recordatorios por SMS/correo (sin spam).
+        </p>
+
+        <div class="row">
+          <span class="badge">Zona horaria: <b style="color:var(--text)">America/Montreal</b></span>
+          <span class="badge">ID de solicitud: <b style="color:var(--text)" id="reqIdEs"></b></span>
+        </div>
+
+        <form id="requestFormEs" onsubmit="return submitRequest(event, 'es')">
+          <div class="formgrid">
+            <div>
+              <label for="nameEs">Nombre completo *</label>
+              <input id="nameEs" name="name" placeholder="Tu nombre" required />
+            </div>
+            <div>
+              <label for="phoneEs">Teléfono *</label>
+              <input id="phoneEs" name="phone" inputmode="tel" placeholder="Ej: 5141234567" required />
+            </div>
+
+            <div>
+              <label for="emailEs">Email *</label>
+              <input id="emailEs" name="email" type="email" placeholder="tunombre@gmail.com" required />
+            </div>
+            <div>
+              <label for="serviceEs">Servicio (opcional)</label>
+              <select id="serviceEs" name="service">
+                <option value="">Selecciona (opcional)</option>
+                <option>Corte</option>
+                <option>Barba</option>
+                <option>Facial</option>
+                <option>Uñas</option>
+                <option>Pestañas</option>
+                <option>Consulta</option>
+                <option>Otro</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="dateEs">Fecha preferida *</label>
+              <input id="dateEs" name="date" type="date" required />
+            </div>
+            <div>
+              <label for="timeEs">Hora preferida *</label>
+              <input id="timeEs" name="time" type="time" required />
+            </div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <label for="noteEs">Nota (opcional)</label>
+            <textarea id="noteEs" name="note" placeholder="Ej: quiero con X persona, varios servicios, etc."></textarea>
+          </div>
+
+          <div class="consent">
+            <div class="consentRow">
+              <input id="smsOkEs" name="sms_consent" type="checkbox" required />
+              <div class="consentText">
+                <b>Acepto recibir SMS</b> solo para <b>confirmación y recordatorios</b> de mi cita. No enviamos spam.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn primary" id="sendBtnEs" type="submit">Enviar solicitud</button>
+            <button class="btn" type="button" onclick="fillExample('es')">Llenar ejemplo</button>
+          </div>
+
+          <div class="small">La cita no se confirma automáticamente.</div>
+          <div class="status" id="statusEs"></div>
+        </form>
+
+        <div class="divider"></div>
+
+        <div class="grid">
+          <div class="tile"><b>Control del negocio</b><span>Confirma o propone otro horario.</span></div>
+          <div class="tile"><b>Menos “no-shows”</b><span>Recordatorios por SMS/email (si se activan).</span></div>
+          <div class="tile"><b>Todo registrado</b><span>La solicitud queda guardada para seguimiento.</span></div>
         </div>
       </section>
 
@@ -274,13 +276,13 @@
       <section id="fr" class="hidden">
         <h1>Demandez votre rendez-vous en quelques minutes</h1>
         <p>
-          Les rendez-vous sont confirmes apres verification par l entreprise.
-          Envoyez votre date et heure preferees, puis nous confirmons par SMS ou email.
+          Votre demande est vérifiée avant confirmation.
+          Vous recevrez confirmation et rappels par SMS/email (pas de spam).
         </p>
 
-        <div class="tile">
-          <b>Important</b>
-          <span>Votre horaire est confirme selon disponibilite. Si indisponible, nous proposerons une autre heure.</span>
+        <div class="row">
+          <span class="badge">Fuseau horaire: <b style="color:var(--text)">America/Montreal</b></span>
+          <span class="badge">ID demande: <b style="color:var(--text)" id="reqIdFr"></b></span>
         </div>
 
         <form id="requestFormFr" onsubmit="return submitRequest(event, 'fr')">
@@ -290,8 +292,8 @@
               <input id="nameFr" name="name" placeholder="Votre nom" required />
             </div>
             <div>
-              <label for="phoneFr">Telephone *</label>
-              <input id="phoneFr" name="phone" placeholder="ex: 5141234567" required />
+              <label for="phoneFr">Téléphone *</label>
+              <input id="phoneFr" name="phone" inputmode="tel" placeholder="ex: 5141234567" required />
             </div>
 
             <div>
@@ -307,31 +309,31 @@
                 <option>Soin visage</option>
                 <option>Ongles</option>
                 <option>Cils</option>
+                <option>Consultation</option>
                 <option>Autre</option>
               </select>
             </div>
 
             <div>
-              <label for="dateFr">Date preferee *</label>
+              <label for="dateFr">Date préférée *</label>
               <input id="dateFr" name="date" type="date" required />
             </div>
             <div>
-              <label for="timeFr">Heure preferee *</label>
+              <label for="timeFr">Heure préférée *</label>
               <input id="timeFr" name="time" type="time" required />
             </div>
           </div>
 
           <div style="margin-top:12px;">
             <label for="noteFr">Note (optionnel)</label>
-            <textarea id="noteFr" name="note" placeholder="ex: personnel specifique, plusieurs services..."></textarea>
+            <textarea id="noteFr" name="note" placeholder="ex: personnel spécifique, plusieurs services, etc."></textarea>
           </div>
 
           <div class="consent">
             <div class="consentRow">
               <input id="smsOkFr" name="sms_consent" type="checkbox" required />
               <div class="consentText">
-                <b>J accepte de recevoir des SMS</b> uniquement pour <b>confirmation et rappels</b> du rendez-vous.
-                Pas de spam.
+                <b>J’accepte de recevoir des SMS</b> uniquement pour <b>confirmation et rappels</b>. Pas de spam.
               </div>
             </div>
           </div>
@@ -341,75 +343,53 @@
             <button class="btn" type="button" onclick="fillExample('fr')">Remplir exemple</button>
           </div>
 
-          <div class="note">Ceci ne confirme pas automatiquement le rendez-vous.</div>
+          <div class="small">Ceci ne confirme pas automatiquement le rendez-vous.</div>
           <div class="status" id="statusFr"></div>
-          <div class="small">
-            Fuseau horaire: America/Montreal. ID demande: <span id="reqIdFr"></span>
-          </div>
         </form>
 
         <div class="divider"></div>
 
         <div class="grid">
-          <div class="tile"><b>Validation</b><span>L entreprise confirme ou propose un autre horaire.</span></div>
-          <div class="tile"><b>Moins d absences</b><span>Rappels SMS/email (si actives).</span></div>
-          <div class="tile"><b>Historique</b><span>La demande est enregistree pour suivi.</span></div>
+          <div class="tile"><b>Validation</b><span>L’entreprise confirme ou propose un autre horaire.</span></div>
+          <div class="tile"><b>Moins d’absences</b><span>Rappels SMS/email (si activés).</span></div>
+          <div class="tile"><b>Historique</b><span>La demande est enregistrée pour suivi.</span></div>
         </div>
       </section>
 
       <div class="foot">
-        <div>© <span id="year"></span> <span id="bizNameBottom">Your Business (Demo)</span></div>
-        <div><a href="mailto:demo@bookingautomation.ca">demo@bookingautomation.ca</a></div>
+        <div>© <span id="year"></span> <span id="bizNameBottom">Booking Automation (Demo)</span></div>
+        <div><a id="bizEmailLink" href="mailto:demo@bookingautomation.ca">demo@bookingautomation.ca</a></div>
       </div>
     </div>
   </main>
 
   <script>
-    // === CONFIG ===
-    // Escenario 1 (Solicitud): Web -> Google Sheets -> Email dueño
-    const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/4bm782apuqg9sc2gg4akzv4melboyftv";
-
-    // Escenario 2 (Decision dueño): Aceptar/Rechazar (este NO se usa en fetch)
-    const APPROVAL_WEBHOOK_URL = "https://hook.us2.make.com/jmx9nuvh7fr4ag262sff0mwy8acw2cep";
-
-    const BUSINESS_NAME = "Your Business (Demo)";
+    // =========================
+    // CONFIG (you'll change these later)
+    // =========================
+    const MAKE_WEBHOOK_URL = "PASTE_YOUR_MAKE_WEBHOOK_HERE"; // Scenario 1 webhook (web -> Make)
+    const BUSINESS_NAME = "Booking Automation (Demo)";
+    const BUSINESS_EMAIL = "demo@bookingautomation.ca";
     const TIME_ZONE = "America/Montreal";
+    const DEFAULT_LANG = "en"; // user requested English first
 
+    // UI setup
     document.getElementById("bizNameTop").textContent = BUSINESS_NAME;
     document.getElementById("bizNameBottom").textContent = BUSINESS_NAME;
+    document.getElementById("bizEmailLink").textContent = BUSINESS_EMAIL;
+    document.getElementById("bizEmailLink").href = `mailto:${BUSINESS_EMAIL}`;
     document.getElementById("year").textContent = new Date().getFullYear();
 
     function setLang(l){
-      document.getElementById("es").classList.toggle("hidden", l!=="es");
-      document.getElementById("en").classList.toggle("hidden", l!=="en");
-      document.getElementById("fr").classList.toggle("hidden", l!=="fr");
+      document.getElementById("en").classList.toggle("hidden", l !== "en");
+      document.getElementById("es").classList.toggle("hidden", l !== "es");
+      document.getElementById("fr").classList.toggle("hidden", l !== "fr");
       localStorage.setItem("lang", l);
       document.documentElement.lang = l;
-      refreshRequestIds();
-    }
-    setLang(localStorage.getItem("lang") || "es");
-
-    function getForm(lang){
-      if(lang === "es") return document.getElementById("requestFormEs");
-      if(lang === "en") return document.getElementById("requestFormEn");
-      return document.getElementById("requestFormFr");
-    }
-    function getStatus(lang){
-      if(lang === "es") return document.getElementById("statusEs");
-      if(lang === "en") return document.getElementById("statusEn");
-      return document.getElementById("statusFr");
-    }
-    function getSendBtn(lang){
-      if(lang === "es") return document.getElementById("sendBtnEs");
-      if(lang === "en") return document.getElementById("sendBtnEn");
-      return document.getElementById("sendBtnFr");
-    }
-    function getReqIdSpan(lang){
-      if(lang === "es") return document.getElementById("reqIdEs");
-      if(lang === "en") return document.getElementById("reqIdEn");
-      return document.getElementById("reqIdFr");
+      refreshRequestId(); // keep the visible ID fresh per view
     }
 
+    // stable-ish unique request id
     function newRequestId(){
       const d = new Date();
       const y = d.getFullYear();
@@ -419,30 +399,49 @@
       return `req_${y}${m}${day}_${rand}`;
     }
 
-    function refreshRequestIds(){
-      const current = newRequestId();
-      ["es","en","fr"].forEach(l => {
-        getReqIdSpan(l).textContent = current;
-      });
+    let currentRequestId = newRequestId();
+    function refreshRequestId(){
+      currentRequestId = newRequestId();
+      document.getElementById("reqIdEn").textContent = currentRequestId;
+      document.getElementById("reqIdEs").textContent = currentRequestId;
+      document.getElementById("reqIdFr").textContent = currentRequestId;
     }
-    refreshRequestIds();
+    refreshRequestId();
+
+    // language init (English first unless user chose before)
+    setLang(localStorage.getItem("lang") || DEFAULT_LANG);
+
+    function getForm(lang){
+      if(lang === "en") return document.getElementById("requestFormEn");
+      if(lang === "es") return document.getElementById("requestFormEs");
+      return document.getElementById("requestFormFr");
+    }
+    function getStatus(lang){
+      if(lang === "en") return document.getElementById("statusEn");
+      if(lang === "es") return document.getElementById("statusEs");
+      return document.getElementById("statusFr");
+    }
+    function getSendBtn(lang){
+      if(lang === "en") return document.getElementById("sendBtnEn");
+      if(lang === "es") return document.getElementById("sendBtnEs");
+      return document.getElementById("sendBtnFr");
+    }
 
     function fillExample(lang){
       const f = getForm(lang);
       const today = new Date();
       const yyyy = today.getFullYear();
       const mm = String(today.getMonth()+1).padStart(2,'0');
-      const dd = String(today.getDate()+1).padStart(2,'0');
-
-      f.querySelector('[name="name"]').value = (lang==="fr") ? "Jean Dupont" : (lang==="en" ? "John Smith" : "Juan Perez");
+      const dd = String(today.getDate()+1).padStart(2,'0'); // tomorrow
+      f.querySelector('[name="name"]').value = (lang==="fr") ? "Jean Dupont" : (lang==="es" ? "Juan Pérez" : "John Smith");
       f.querySelector('[name="phone"]').value = "5141234567";
       f.querySelector('[name="email"]').value = "client@example.com";
-      f.querySelector('[name="service"]').value = (lang==="en") ? "Haircut" : (lang==="fr" ? "Coupe" : "Corte");
+      f.querySelector('[name="service"]').value = (lang==="fr") ? "Coupe" : (lang==="es" ? "Corte" : "Haircut");
       f.querySelector('[name="date"]').value = `${yyyy}-${mm}-${dd}`;
       f.querySelector('[name="time"]').value = "16:00";
-      f.querySelector('[name="note"]').value = (lang==="en")
-        ? "First time. Please confirm availability."
-        : (lang==="fr" ? "Premiere visite. Merci de confirmer la disponibilite." : "Primera vez. Por favor confirma disponibilidad.");
+      f.querySelector('[name="note"]').value = (lang==="fr")
+        ? "Première visite. Merci de confirmer la disponibilité."
+        : (lang==="es" ? "Primera vez. Por favor confirma disponibilidad." : "First time. Please confirm availability.");
       f.querySelector('[name="sms_consent"]').checked = true;
     }
 
@@ -453,44 +452,54 @@
       const status = getStatus(lang);
       const btn = getSendBtn(lang);
 
-      const request_id = newRequestId();
-      ["es","en","fr"].forEach(l => getReqIdSpan(l).textContent = request_id);
-
       const data = {
-        request_id,
+        request_id: currentRequestId,
         business_name: BUSINESS_NAME,
+        business_email: BUSINESS_EMAIL,
         lang: lang,
         time_zone: TIME_ZONE,
-        sms_consent: !!form.querySelector('[name="sms_consent"]').checked,
 
         name: form.querySelector('[name="name"]').value.trim(),
         phone: form.querySelector('[name="phone"]').value.trim(),
         email: form.querySelector('[name="email"]').value.trim(),
-        service: form.querySelector('[name="service"]').value,
+        service: form.querySelector('[name="service"]').value || "",
         date: form.querySelector('[name="date"]').value,
         time: form.querySelector('[name="time"]').value,
         note: form.querySelector('[name="note"]').value.trim(),
+        sms_consent: !!form.querySelector('[name="sms_consent"]').checked,
 
         status: "pending",
         source: "website",
         submitted_at_iso: new Date().toISOString()
       };
 
+      // basic validation
       if(!data.name || !data.phone || !data.email || !data.date || !data.time || !data.sms_consent){
         status.className = "status err";
         status.style.display = "block";
         status.textContent = (lang==="en")
-          ? "Please complete the required fields and consent to SMS reminders."
-          : (lang==="fr" ? "Veuillez remplir les champs obligatoires et accepter les SMS de rappel." : "Completa los campos obligatorios y acepta los SMS de recordatorio.");
+          ? "Please complete required fields and accept SMS consent (for confirmation & reminders only)."
+          : (lang==="es")
+            ? "Completa los campos obligatorios y acepta el consentimiento SMS (solo confirmación y recordatorios)."
+            : "Veuillez remplir les champs obligatoires et accepter le consentement SMS (confirmation & rappels uniquement).";
+        return false;
+      }
+
+      if(MAKE_WEBHOOK_URL.includes("PASTE_YOUR_MAKE_WEBHOOK_HERE")){
+        status.className = "status err";
+        status.style.display = "block";
+        status.textContent = (lang==="en")
+          ? "Setup needed: paste your Make webhook URL in the code (MAKE_WEBHOOK_URL)."
+          : (lang==="es")
+            ? "Falta configurar: pega tu URL del webhook de Make en el código (MAKE_WEBHOOK_URL)."
+            : "Configuration requise : collez l’URL du webhook Make dans le code (MAKE_WEBHOOK_URL).";
         return false;
       }
 
       btn.disabled = true;
       status.className = "status";
       status.style.display = "block";
-      status.textContent = (lang==="en")
-        ? "Sending request..."
-        : (lang==="fr" ? "Envoi en cours..." : "Enviando solicitud...");
+      status.textContent = (lang==="en") ? "Sending request..." : (lang==="es") ? "Enviando solicitud..." : "Envoi en cours...";
 
       try{
         const res = await fetch(MAKE_WEBHOOK_URL, {
@@ -505,16 +514,20 @@
 
         status.className = "status ok";
         status.textContent = (lang==="en")
-          ? "Request sent! We will confirm by SMS or email soon."
-          : (lang==="fr" ? "Demande envoyee! Nous confirmerons bientot par SMS ou email." : "Solicitud enviada! Te confirmamos pronto por SMS o correo.");
+          ? "Request sent! The business will confirm by SMS or email soon."
+          : (lang==="es")
+            ? "¡Solicitud enviada! El negocio confirmará por SMS o correo pronto."
+            : "Demande envoyée ! L’entreprise confirmera bientôt par SMS ou email.";
 
         form.reset();
-        refreshRequestIds();
+        refreshRequestId();
       }catch(err){
         status.className = "status err";
         status.textContent = (lang==="en")
           ? "Something went wrong. Please try again or contact us."
-          : (lang==="fr" ? "Un probleme est survenu. Reessayez ou contactez-nous." : "Algo salio mal. Intenta de nuevo o contactanos.");
+          : (lang==="es")
+            ? "Algo salió mal. Intenta de nuevo o contáctanos."
+            : "Un problème est survenu. Réessayez ou contactez-nous.";
         console.error(err);
       }finally{
         btn.disabled = false;
