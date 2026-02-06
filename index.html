@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Appointment Request — EN/ES/FR</title>
-  <meta name="description" content="Send an appointment request. The business reviews and confirms by SMS/email." />
+  <title>Booking Request Demo — EN/ES/FR</title>
+  <meta name="description" content="Appointment request demo (EN/ES/FR). Business reviews and confirms by SMS/email." />
   <style>
     :root{
       --bg:#0b0f17;
@@ -14,14 +14,18 @@
       --line:rgba(148,163,184,.18);
       --accent:#60a5fa;
       --accent2:#34d399;
-      --danger:#f87171;
-      --ok:#34d399;
       --r:18px;
     }
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:radial-gradient(1200px 800px at 20% -10%, rgba(96,165,250,.20), transparent 60%),
-                                          radial-gradient(1200px 800px at 100% 10%, rgba(52,211,153,.18), transparent 55%),
-                                          var(--bg);color:var(--text)}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:
+        radial-gradient(1200px 800px at 20% -10%, rgba(96,165,250,.22), transparent 60%),
+        radial-gradient(1200px 800px at 100% 10%, rgba(52,211,153,.18), transparent 55%),
+        var(--bg);
+      color:var(--text)
+    }
     .wrap{max-width:1040px;margin:0 auto;padding:28px 16px 70px}
     .card{background:rgba(17,24,39,.82);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:0 14px 60px rgba(0,0,0,.35)}
     .top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
@@ -93,8 +97,8 @@
     <div class="card">
       <div class="top">
         <div class="brand">
-          <b id="bizNameTop">Booking Automation (Demo)</b>
-          <div class="pill" id="bizPill">Requests • Approval • Reminders</div>
+          <b id="bizNameTop">Booking Demo</b>
+          <div class="pill">Requests • Approval • Reminders</div>
         </div>
 
         <div class="lang">
@@ -106,11 +110,12 @@
 
       <!-- EN -->
       <section id="en">
-     <h1>Request an appointment in seconds</h1>
-     <p>
-      Submit your preferred date and time. The business will review availability and confirm.
-      You’ll only receive SMS/email for confirmation and reminders — no spam.
-       </p>
+        <h1>Request an appointment in seconds</h1>
+        <p>
+          Submit your preferred date and time. The business will review availability and confirm.
+          You’ll only receive SMS/email for confirmation and reminders — no spam.
+        </p>
+
         <div class="row">
           <span class="badge">Time zone: <b style="color:var(--text)">America/Montreal</b></span>
           <span class="badge">Request ID: <b style="color:var(--text)" id="reqIdEn"></b></span>
@@ -124,12 +129,12 @@
             </div>
             <div>
               <label for="phoneEn">Phone *</label>
-              <input id="phoneEn" name="phone" inputmode="tel" placeholder="e.g. 5141234567" required />
+              <input id="phoneEn" name="phone" inputmode="tel" pattern="^[0-9+()\\-\\s]{7,20}$" placeholder="e.g. 5141234567" required />
             </div>
 
             <div>
               <label for="emailEn">Email *</label>
-              <input id="phoneEn" name="phone" inputmode="tel" pattern="^[0-9+()\\-\\s]{7,20}$" placeholder="e.g. 5141234567" required />
+              <input id="emailEn" name="email" type="email" placeholder="you@gmail.com" required />
             </div>
             <div>
               <label for="serviceEn">Service (optional)</label>
@@ -164,7 +169,7 @@
             <div class="consentRow">
               <input id="smsOkEn" name="sms_consent" type="checkbox" required />
               <div class="consentText">
-                <b>I agree to receive SMS</b> for <b>appointment confirmation and reminders only</b>.We do not send marketing messages.
+                <b>I agree to receive SMS</b> for <b>appointment confirmation and reminders only</b>. We do not send marketing messages.
               </div>
             </div>
           </div>
@@ -189,10 +194,10 @@
 
       <!-- ES -->
       <section id="es" class="hidden">
-        <h1>Solicita tu cita en minutos</h1>
+        <h1>Solicita tu cita en segundos</h1>
         <p>
-          Tu solicitud se revisa antes de confirmarse.
-          Recibirás confirmación y recordatorios por SMS/correo (sin spam).
+          Envía tu fecha y hora preferidas. El negocio revisa disponibilidad y confirma.
+          Solo recibirás SMS/correo para confirmación y recordatorios — sin spam.
         </p>
 
         <div class="row">
@@ -208,7 +213,7 @@
             </div>
             <div>
               <label for="phoneEs">Teléfono *</label>
-             <input id="phoneEs" name="phone" inputmode="tel" pattern="^[0-9+()\\-\\s]{7,20}$" placeholder="e.g. 5141234567" required />
+              <input id="phoneEs" name="phone" inputmode="tel" pattern="^[0-9+()\\-\\s]{7,20}$" placeholder="Ej: 5141234567" required />
             </div>
 
             <div>
@@ -248,7 +253,7 @@
             <div class="consentRow">
               <input id="smsOkEs" name="sms_consent" type="checkbox" required />
               <div class="consentText">
-                <b>Acepto recibir SMS</b> solo para <b>confirmación y recordatorios</b>.No enviamos mensajes de marketing.
+                <b>Acepto recibir SMS</b> solo para <b>confirmación y recordatorios</b>. No enviamos mensajes de marketing.
               </div>
             </div>
           </div>
@@ -273,10 +278,10 @@
 
       <!-- FR -->
       <section id="fr" class="hidden">
-        <h1>Demandez votre rendez-vous en quelques minutes</h1>
+        <h1>Demandez votre rendez-vous en quelques secondes</h1>
         <p>
-          Votre demande est vérifiée avant confirmation.
-          Vous recevrez confirmation et rappels par SMS/email (pas de spam).
+          Envoyez votre date et heure préférées. L’entreprise vérifie la disponibilité et confirme.
+          SMS/email uniquement pour confirmation et rappels — pas de spam.
         </p>
 
         <div class="row">
@@ -292,7 +297,7 @@
             </div>
             <div>
               <label for="phoneFr">Téléphone *</label>
-              <input id="phoneEr" name="phone" inputmode="tel" pattern="^[0-9+()\\-\\s]{7,20}$" placeholder="e.g. 5141234567" required />
+              <input id="phoneFr" name="phone" inputmode="tel" pattern="^[0-9+()\\-\\s]{7,20}$" placeholder="ex: 5141234567" required />
             </div>
 
             <div>
@@ -332,7 +337,7 @@
             <div class="consentRow">
               <input id="smsOkFr" name="sms_consent" type="checkbox" required />
               <div class="consentText">
-                <b>J’accepte de recevoir des SMS</b> uniquement pour <b>confirmation et rappels</b>.Aucun message marketing.
+                <b>J’accepte de recevoir des SMS</b> uniquement pour <b>confirmation et rappels</b>. Aucun message marketing.
               </div>
             </div>
           </div>
@@ -356,28 +361,19 @@
       </section>
 
       <div class="foot">
-        <div>© <span id="year"></span> <span id="bizNameBottom">Booking Automation (Demo)</span></div>
-        <div><a id="bizEmailLink" href="mailto:demo@bookingautomation.ca">demo@bookingautomation.ca</a></div>
+        <div>© <span id="year"></span> Booking Demo</div>
+        <div><a href="mailto:demo@bookingautomation.ca">demo@bookingautomation.ca</a></div>
       </div>
     </div>
   </main>
 
   <script>
-   // =========================
-// CONFIG
-// =========================
-const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/89o2yxre1e38v1pgjjoa7wt9dpmsa12g";
-const BUSINESS_NAME = "Smart Booking Assistant (Demo)";
-const BUSINESS_EMAIL = "demo@bookingautomation.ca";
-const TIME_ZONE = "America/Montreal";
-const DEFAULT_LANG = "en"; // English first
+    // CONFIG
+    const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/89o2yxre1e38v1pgjjoa7wt9dpmsa12g";
+    const TIME_ZONE = "America/Montreal";
+    const DEFAULT_LANG = "en"; // English first
 
-// UI setup
-document.getElementById("bizNameTop").textContent = BUSINESS_NAME;
-document.getElementById("bizNameBottom").textContent = BUSINESS_NAME;
-document.getElementById("bizEmailLink").textContent = BUSINESS_EMAIL;
-document.getElementById("bizEmailLink").href = `mailto:${BUSINESS_EMAIL}`;
-document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
 
     function setLang(l){
       document.getElementById("en").classList.toggle("hidden", l !== "en");
@@ -385,10 +381,9 @@ document.getElementById("year").textContent = new Date().getFullYear();
       document.getElementById("fr").classList.toggle("hidden", l !== "fr");
       localStorage.setItem("lang", l);
       document.documentElement.lang = l;
-      refreshRequestId(); // keep the visible ID fresh per view
+      refreshRequestId();
     }
 
-    // stable-ish unique request id
     function newRequestId(){
       const d = new Date();
       const y = d.getFullYear();
@@ -407,7 +402,6 @@ document.getElementById("year").textContent = new Date().getFullYear();
     }
     refreshRequestId();
 
-    // language init (English first unless user chose before)
     setLang(localStorage.getItem("lang") || DEFAULT_LANG);
 
     function getForm(lang){
@@ -431,16 +425,18 @@ document.getElementById("year").textContent = new Date().getFullYear();
       const today = new Date();
       const yyyy = today.getFullYear();
       const mm = String(today.getMonth()+1).padStart(2,'0');
-      const dd = String(today.getDate()+1).padStart(2,'0'); // tomorrow
+      const dd = String(today.getDate()+1).padStart(2,'0');
+
       f.querySelector('[name="name"]').value = (lang==="fr") ? "Jean Dupont" : (lang==="es" ? "Juan Pérez" : "John Smith");
       f.querySelector('[name="phone"]').value = "5141234567";
       f.querySelector('[name="email"]').value = "client@example.com";
       f.querySelector('[name="service"]').value = (lang==="fr") ? "Coupe" : (lang==="es" ? "Corte" : "Haircut");
       f.querySelector('[name="date"]').value = `${yyyy}-${mm}-${dd}`;
       f.querySelector('[name="time"]').value = "16:00";
-      f.querySelector('[name="note"]').value = (lang==="fr")
-        ? "Première visite. Merci de confirmer la disponibilité."
-        : (lang==="es" ? "Primera vez. Por favor confirma disponibilidad." : "First time. Please confirm availability.");
+      f.querySelector('[name="note"]').value =
+        (lang==="fr") ? "Première visite. Merci de confirmer la disponibilité."
+        : (lang==="es") ? "Primera vez. Por favor confirma disponibilidad."
+        : "First time. Please confirm availability.";
       f.querySelector('[name="sms_consent"]').checked = true;
     }
 
@@ -451,10 +447,12 @@ document.getElementById("year").textContent = new Date().getFullYear();
       const status = getStatus(lang);
       const btn = getSendBtn(lang);
 
+      status.className = "status";
+      status.style.display = "block";
+      status.textContent = (lang==="en") ? "Sending request..." : (lang==="es") ? "Enviando solicitud..." : "Envoi en cours...";
+
       const data = {
         request_id: currentRequestId,
-        business_name: BUSINESS_NAME,
-        business_email: BUSINESS_EMAIL,
         lang: lang,
         time_zone: TIME_ZONE,
 
@@ -472,33 +470,16 @@ document.getElementById("year").textContent = new Date().getFullYear();
         submitted_at_iso: new Date().toISOString()
       };
 
-      // basic validation
       if(!data.name || !data.phone || !data.email || !data.date || !data.time || !data.sms_consent){
         status.className = "status err";
-        status.style.display = "block";
-        status.textContent = (lang==="en")
-          ? "Please complete required fields and accept SMS consent (for confirmation & reminders only)."
-          : (lang==="es")
-            ? "Completa los campos obligatorios y acepta el consentimiento SMS (solo confirmación y recordatorios)."
-            : "Veuillez remplir les champs obligatoires et accepter le consentement SMS (confirmation & rappels uniquement).";
-        return false;
-      }
-
-      if(MAKE_WEBHOOK_URL.includes("PASTE_YOUR_MAKE_WEBHOOK_HERE")){
-        status.className = "status err";
-        status.style.display = "block";
-        status.textContent = (lang==="en")
-          ? "Setup needed: paste your Make webhook URL in the code (MAKE_WEBHOOK_URL)."
-          : (lang==="es")
-            ? "Falta configurar: pega tu URL del webhook de Make en el código (MAKE_WEBHOOK_URL)."
-            : "Configuration requise : collez l’URL du webhook Make dans le code (MAKE_WEBHOOK_URL).";
+        status.textContent =
+          (lang==="en") ? "Please complete required fields and accept SMS consent."
+          : (lang==="es") ? "Completa los campos obligatorios y acepta el consentimiento SMS."
+          : "Veuillez remplir les champs obligatoires et accepter le consentement SMS.";
         return false;
       }
 
       btn.disabled = true;
-      status.className = "status";
-      status.style.display = "block";
-      status.textContent = (lang==="en") ? "Sending request..." : (lang==="es") ? "Enviando solicitud..." : "Envoi en cours...";
 
       try{
         const res = await fetch(MAKE_WEBHOOK_URL, {
@@ -506,37 +487,28 @@ document.getElementById("year").textContent = new Date().getFullYear();
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         });
-
-        if(!res.ok){
-          throw new Error("HTTP " + res.status);
-        }
+        if(!res.ok) throw new Error("HTTP " + res.status);
 
         status.className = "status ok";
-        status.textContent = (lang==="en")
-          ? "Request sent! The business will confirm by SMS or email soon."
-          : (lang==="es")
-            ? "¡Solicitud enviada! El negocio confirmará por SMS o correo pronto."
-            : "Demande envoyée ! L’entreprise confirmera bientôt par SMS ou email.";
+        status.textContent =
+          (lang==="en") ? "Request sent! We will confirm by SMS/email."
+          : (lang==="es") ? "¡Solicitud enviada! Te confirmaremos por SMS/correo."
+          : "Demande envoyée ! Nous confirmerons par SMS/email.";
 
         form.reset();
         refreshRequestId();
       }catch(err){
         status.className = "status err";
-        status.textContent = (lang==="en")
-          ? "Something went wrong. Please try again or contact us."
-          : (lang==="es")
-            ? "Algo salió mal. Intenta de nuevo o contáctanos."
-            : "Un problème est survenu. Réessayez ou contactez-nous.";
+        status.textContent =
+          (lang==="en") ? "Error sending request. Please try again."
+          : (lang==="es") ? "Error al enviar la solicitud. Intenta de nuevo."
+          : "Erreur lors de l’envoi. Réessayez.";
         console.error(err);
       }finally{
         btn.disabled = false;
       }
-
       return false;
     }
   </script>
 </body>
 </html>
-
-
-
