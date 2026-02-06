@@ -363,21 +363,21 @@
   </main>
 
   <script>
-    // =========================
-    // CONFIG (you'll change these later)
-    // =========================
-    const MAKE_WEBHOOK_URL = "PASTE_YOUR_MAKE_WEBHOOK_HERE"; // Scenario 1 webhook (web -> Make)
-   const BUSINESS_NAME = "Smart Booking Assistant (Demo)";
+   // =========================
+// CONFIG
+// =========================
+const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/89o2yxre1e38v1pgjjoa7wt9dpmsa12g";
+const BUSINESS_NAME = "Smart Booking Assistant (Demo)";
 const BUSINESS_EMAIL = "demo@bookingautomation.ca";
 const TIME_ZONE = "America/Montreal";
-    const DEFAULT_LANG = "en"; // user requested English first
+const DEFAULT_LANG = "en"; // English first
 
-    // UI setup
-    document.getElementById("bizNameTop").textContent = BUSINESS_NAME;
-    document.getElementById("bizNameBottom").textContent = BUSINESS_NAME;
-    document.getElementById("bizEmailLink").textContent = BUSINESS_EMAIL;
-    document.getElementById("bizEmailLink").href = `mailto:${BUSINESS_EMAIL}`;
-    document.getElementById("year").textContent = new Date().getFullYear();
+// UI setup
+document.getElementById("bizNameTop").textContent = BUSINESS_NAME;
+document.getElementById("bizNameBottom").textContent = BUSINESS_NAME;
+document.getElementById("bizEmailLink").textContent = BUSINESS_EMAIL;
+document.getElementById("bizEmailLink").href = `mailto:${BUSINESS_EMAIL}`;
+document.getElementById("year").textContent = new Date().getFullYear();
 
     function setLang(l){
       document.getElementById("en").classList.toggle("hidden", l !== "en");
@@ -537,4 +537,5 @@ const TIME_ZONE = "America/Montreal";
   </script>
 </body>
 </html>
+
 
