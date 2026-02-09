@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Booking Request Demo — EN/ES/FR</title>
-  <meta name="description" content="Appointment request demo (EN/ES/FR). Business reviews and confirms by SMS/email." />
+  <meta name="description" content="Appointment request demo (EN/ES/FR). Only available times are shown. Business can confirm and send reminders." />
   <style>
     :root{
       --bg:#0b0f17;
@@ -41,7 +41,7 @@
     @media(max-width:900px){.grid{grid-template-columns:1fr}}
     .tile{border:1px solid var(--line);background:rgba(11,15,23,.35);border-radius:14px;padding:14px}
     .tile b{display:block;margin-bottom:6px}
-    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
     .foot{margin-top:18px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
     .hidden{display:none}
     form{margin-top:14px}
@@ -90,6 +90,7 @@
       padding:8px 10px;border:1px solid var(--line);border-radius:999px;
       background:rgba(11,15,23,.35);
     }
+    .badge b{color:var(--text)}
   </style>
 </head>
 <body>
@@ -97,8 +98,8 @@
     <div class="card">
       <div class="top">
         <div class="brand">
-          <b id="bizNameTop">Booking Demo</b>
-          <div class="pill">Requests • Approval • Reminders</div>
+          <b id="bizNameTop">Smart Booking Assistant (Demo)</b>
+          <div class="pill" id="bizPill">Availability • Requests • Confirmation • Reminders</div>
         </div>
 
         <div class="lang">
@@ -110,15 +111,15 @@
 
       <!-- EN -->
       <section id="en">
-        <h1>Request an appointment in seconds</h1>
+        <h1>Book only available times</h1>
         <p>
-          Submit your preferred date and time. The business will review availability and confirm.
-          You’ll only receive SMS/email for confirmation and reminders — no spam.
+          Select a date to see available time slots. If a day is closed or has no availability, it will show automatically.
+          You will only receive SMS/email for confirmations and reminders — no spam.
         </p>
 
         <div class="row">
-          <span class="badge">Time zone: <b style="color:var(--text)">America/Montreal</b></span>
-          <span class="badge">Request ID: <b style="color:var(--text)" id="reqIdEn"></b></span>
+          <span class="badge">Time zone: <b>America/Montreal</b></span>
+          <span class="badge">Request ID: <b id="reqIdEn"></b></span>
         </div>
 
         <form id="requestFormEn" onsubmit="return submitRequest(event, 'en')">
@@ -155,8 +156,8 @@
               <input id="dateEn" name="date" type="date" required />
             </div>
             <div>
-              <label for="timeEn">Preferred time *</label>
-              <input id="timeEn" name="time" type="time" required />
+              <label for="timeEn">Available time *</label>
+              <select id="timeEn" name="time" required></select>
             </div>
           </div>
 
@@ -179,30 +180,30 @@
             <button class="btn" type="button" onclick="fillExample('en')">Fill example</button>
           </div>
 
-          <div class="small">This does not auto-confirm your appointment.</div>
+          <div class="small">Slots are based on a 45-minute service + 15-minute buffer.</div>
           <div class="status" id="statusEn"></div>
         </form>
 
         <div class="divider"></div>
 
         <div class="grid">
-          <div class="tile"><b>Business approval</b><span>They confirm or propose another time.</span></div>
+          <div class="tile"><b>No overlaps</b><span>Only valid time slots appear.</span></div>
           <div class="tile"><b>Fewer no-shows</b><span>Reminders by SMS/email (if enabled).</span></div>
-          <div class="tile"><b>Everything logged</b><span>Your request is saved for follow-up.</span></div>
+          <div class="tile"><b>Everything logged</b><span>Requests are saved for follow-up.</span></div>
         </div>
       </section>
 
       <!-- ES -->
       <section id="es" class="hidden">
-        <h1>Solicita tu cita en segundos</h1>
+        <h1>Reserva solo horas disponibles</h1>
         <p>
-          Envía tu fecha y hora preferidas. El negocio revisa disponibilidad y confirma.
+          Elige una fecha para ver horarios disponibles. Si un día está cerrado o no hay disponibilidad, aparecerá automáticamente.
           Solo recibirás SMS/correo para confirmación y recordatorios — sin spam.
         </p>
 
         <div class="row">
-          <span class="badge">Zona horaria: <b style="color:var(--text)">America/Montreal</b></span>
-          <span class="badge">ID de solicitud: <b style="color:var(--text)" id="reqIdEs"></b></span>
+          <span class="badge">Zona horaria: <b>America/Montreal</b></span>
+          <span class="badge">ID de solicitud: <b id="reqIdEs"></b></span>
         </div>
 
         <form id="requestFormEs" onsubmit="return submitRequest(event, 'es')">
@@ -239,8 +240,8 @@
               <input id="dateEs" name="date" type="date" required />
             </div>
             <div>
-              <label for="timeEs">Hora preferida *</label>
-              <input id="timeEs" name="time" type="time" required />
+              <label for="timeEs">Hora disponible *</label>
+              <select id="timeEs" name="time" required></select>
             </div>
           </div>
 
@@ -263,30 +264,30 @@
             <button class="btn" type="button" onclick="fillExample('es')">Llenar ejemplo</button>
           </div>
 
-          <div class="small">La cita no se confirma automáticamente.</div>
+          <div class="small">Los horarios usan 45 min de servicio + 15 min de buffer.</div>
           <div class="status" id="statusEs"></div>
         </form>
 
         <div class="divider"></div>
 
         <div class="grid">
-          <div class="tile"><b>Control del negocio</b><span>Confirma o propone otro horario.</span></div>
+          <div class="tile"><b>Sin choques</b><span>Solo aparecen horarios válidos.</span></div>
           <div class="tile"><b>Menos “no-shows”</b><span>Recordatorios por SMS/email (si se activan).</span></div>
-          <div class="tile"><b>Todo registrado</b><span>La solicitud queda guardada para seguimiento.</span></div>
+          <div class="tile"><b>Todo registrado</b><span>La solicitud se guarda para seguimiento.</span></div>
         </div>
       </section>
 
       <!-- FR -->
       <section id="fr" class="hidden">
-        <h1>Demandez votre rendez-vous en quelques secondes</h1>
+        <h1>Choisissez seulement des heures disponibles</h1>
         <p>
-          Envoyez votre date et heure préférées. L’entreprise vérifie la disponibilité et confirme.
+          Choisissez une date pour voir les créneaux disponibles. Si un jour est fermé ou complet, cela s’affiche automatiquement.
           SMS/email uniquement pour confirmation et rappels — pas de spam.
         </p>
 
         <div class="row">
-          <span class="badge">Fuseau horaire: <b style="color:var(--text)">America/Montreal</b></span>
-          <span class="badge">ID demande: <b style="color:var(--text)" id="reqIdFr"></b></span>
+          <span class="badge">Fuseau horaire: <b>America/Montreal</b></span>
+          <span class="badge">ID demande: <b id="reqIdFr"></b></span>
         </div>
 
         <form id="requestFormFr" onsubmit="return submitRequest(event, 'fr')">
@@ -323,8 +324,8 @@
               <input id="dateFr" name="date" type="date" required />
             </div>
             <div>
-              <label for="timeFr">Heure préférée *</label>
-              <input id="timeFr" name="time" type="time" required />
+              <label for="timeFr">Heure disponible *</label>
+              <select id="timeFr" name="time" required></select>
             </div>
           </div>
 
@@ -347,32 +348,47 @@
             <button class="btn" type="button" onclick="fillExample('fr')">Remplir exemple</button>
           </div>
 
-          <div class="small">Ceci ne confirme pas automatiquement le rendez-vous.</div>
+          <div class="small">Créneaux basés sur 45 min + 15 min de buffer.</div>
           <div class="status" id="statusFr"></div>
         </form>
 
         <div class="divider"></div>
 
         <div class="grid">
-          <div class="tile"><b>Validation</b><span>L’entreprise confirme ou propose un autre horaire.</span></div>
+          <div class="tile"><b>Sans chevauchement</b><span>Seulement des créneaux valides.</span></div>
           <div class="tile"><b>Moins d’absences</b><span>Rappels SMS/email (si activés).</span></div>
           <div class="tile"><b>Historique</b><span>La demande est enregistrée pour suivi.</span></div>
         </div>
       </section>
 
       <div class="foot">
-        <div>© <span id="year"></span> Booking Demo</div>
+        <div>© <span id="year"></span> Smart Booking Assistant (Demo)</div>
         <div><a href="mailto:demo@bookingautomation.ca">demo@bookingautomation.ca</a></div>
       </div>
     </div>
   </main>
 
   <script>
-    // CONFIG
+    // ===== CONFIG =====
     const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/jsqq2dn8jrw7kaiejplcjiro7t2cloot";
     const TIME_ZONE = "America/Montreal";
-    const DEFAULT_LANG = "en"; // English first
+    const DEFAULT_LANG = "en";
 
+    // Business hours + slot rules
+    // 45 min service + 15 min buffer = 60 min slots
+    const SLOT_MINUTES = 60;
+    const HOURS = {
+      // 0=Sun ... 6=Sat
+      1: { start: "09:00", end: "19:00" }, // Mon
+      2: { start: "09:00", end: "19:00" }, // Tue
+      3: { start: "09:00", end: "19:00" }, // Wed
+      4: { start: "09:00", end: "19:00" }, // Thu
+      5: { start: "09:00", end: "19:00" }, // Fri
+      6: { start: "10:00", end: "17:00" }, // Sat
+      0: null                               // Sun closed
+    };
+
+    // ===== UI Setup =====
     document.getElementById("year").textContent = new Date().getFullYear();
 
     function setLang(l){
@@ -381,28 +397,16 @@
       document.getElementById("fr").classList.toggle("hidden", l !== "fr");
       localStorage.setItem("lang", l);
       document.documentElement.lang = l;
+
+      // refresh request id display and time dropdown for the active language
       refreshRequestId();
+      const f = getForm(l);
+      const dateEl = f.querySelector('[name="date"]');
+      const timeEl = f.querySelector('[name="time"]');
+      if(dateEl && timeEl){
+        fillTimeSelect(timeEl, dateEl.value, l);
+      }
     }
-
-    function newRequestId(){
-      const d = new Date();
-      const y = d.getFullYear();
-      const m = String(d.getMonth()+1).padStart(2,'0');
-      const day = String(d.getDate()).padStart(2,'0');
-      const rand = Math.random().toString(16).slice(2,10);
-      return `req_${y}${m}${day}_${rand}`;
-    }
-
-    let currentRequestId = newRequestId();
-    function refreshRequestId(){
-      currentRequestId = newRequestId();
-      document.getElementById("reqIdEn").textContent = currentRequestId;
-      document.getElementById("reqIdEs").textContent = currentRequestId;
-      document.getElementById("reqIdFr").textContent = currentRequestId;
-    }
-    refreshRequestId();
-
-    setLang(localStorage.getItem("lang") || DEFAULT_LANG);
 
     function getForm(lang){
       if(lang === "en") return document.getElementById("requestFormEn");
@@ -419,7 +423,103 @@
       if(lang === "es") return document.getElementById("sendBtnEs");
       return document.getElementById("sendBtnFr");
     }
+    function reqSpan(lang){
+      if(lang === "en") return document.getElementById("reqIdEn");
+      if(lang === "es") return document.getElementById("reqIdEs");
+      return document.getElementById("reqIdFr");
+    }
 
+    // ===== Request IDs =====
+    function newRequestId(){
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,'0');
+      const day = String(d.getDate()).padStart(2,'0');
+      const rand = Math.random().toString(16).slice(2,10);
+      return `req_${y}${m}${day}_${rand}`;
+    }
+    let currentRequestId = newRequestId();
+    function refreshRequestId(){
+      // Keep current ID until submission; only show it across languages
+      ["en","es","fr"].forEach(l => reqSpan(l).textContent = currentRequestId);
+    }
+    refreshRequestId();
+
+    // ===== Slots (no overlaps) =====
+    function toMinutes(hhmm){
+      const [h,m] = hhmm.split(":").map(Number);
+      return h*60 + m;
+    }
+    function toHHMM(min){
+      const h = Math.floor(min/60);
+      const m = min%60;
+      return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0");
+    }
+    function buildSlotsForDate(dateStr){
+      if(!dateStr) return [];
+      const d = new Date(dateStr + "T12:00:00"); // safe noon
+      const dow = d.getDay();
+      const hours = HOURS[dow];
+      if(!hours) return [];
+
+      const start = toMinutes(hours.start);
+      const end = toMinutes(hours.end);
+
+      const slots = [];
+      for(let t=start; t + SLOT_MINUTES <= end; t += SLOT_MINUTES){
+        slots.push(toHHMM(t));
+      }
+      return slots;
+    }
+    function fillTimeSelect(selectEl, dateStr, lang){
+      const slots = buildSlotsForDate(dateStr);
+
+      selectEl.innerHTML = "";
+      const ph = document.createElement("option");
+      ph.value = "";
+      ph.textContent =
+        (lang==="es") ? "Selecciona una hora" :
+        (lang==="fr") ? "Choisir une heure" :
+        "Select a time";
+      ph.disabled = true;
+      ph.selected = true;
+      selectEl.appendChild(ph);
+
+      if(slots.length === 0){
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent =
+          (lang==="es") ? "No hay disponibilidad ese día" :
+          (lang==="fr") ? "Aucune disponibilité ce jour-là" :
+          "No availability for this date";
+        opt.disabled = true;
+        selectEl.appendChild(opt);
+        selectEl.disabled = true;
+        return;
+      }
+
+      selectEl.disabled = false;
+      for(const s of slots){
+        const opt = document.createElement("option");
+        opt.value = s;
+        opt.textContent = s;
+        selectEl.appendChild(opt);
+      }
+    }
+
+    // Hook date changes for all languages
+    ["en","es","fr"].forEach(lang => {
+      const f = getForm(lang);
+      const dateEl = f.querySelector('[name="date"]');
+      const timeEl = f.querySelector('[name="time"]');
+      if(dateEl && timeEl){
+        dateEl.addEventListener("change", () => {
+          fillTimeSelect(timeEl, dateEl.value, lang);
+        });
+      }
+    });
+
+    // ===== Fill example =====
     function fillExample(lang){
       const f = getForm(lang);
       const today = new Date();
@@ -432,7 +532,15 @@
       f.querySelector('[name="email"]').value = "client@example.com";
       f.querySelector('[name="service"]').value = (lang==="fr") ? "Coupe" : (lang==="es" ? "Corte" : "Haircut");
       f.querySelector('[name="date"]').value = `${yyyy}-${mm}-${dd}`;
-      f.querySelector('[name="time"]').value = "16:00";
+
+      // fill slots for that date and pick first available
+      const timeEl = f.querySelector('[name="time"]');
+      fillTimeSelect(timeEl, `${yyyy}-${mm}-${dd}`, lang);
+      // choose first real slot if exists
+      if(timeEl && timeEl.options.length > 1 && !timeEl.disabled){
+        timeEl.selectedIndex = 1;
+      }
+
       f.querySelector('[name="note"]').value =
         (lang==="fr") ? "Première visite. Merci de confirmer la disponibilité."
         : (lang==="es") ? "Primera vez. Por favor confirma disponibilidad."
@@ -440,6 +548,7 @@
       f.querySelector('[name="sms_consent"]').checked = true;
     }
 
+    // ===== Submit =====
     async function submitRequest(event, lang){
       event.preventDefault();
 
@@ -447,9 +556,12 @@
       const status = getStatus(lang);
       const btn = getSendBtn(lang);
 
-      status.className = "status";
-      status.style.display = "block";
-      status.textContent = (lang==="en") ? "Sending request..." : (lang==="es") ? "Enviando solicitud..." : "Envoi en cours...";
+      // Ensure time dropdown is valid
+      const dateVal = form.querySelector('[name="date"]').value;
+      const timeEl = form.querySelector('[name="time"]');
+      if(timeEl){
+        fillTimeSelect(timeEl, dateVal, lang);
+      }
 
       const data = {
         request_id: currentRequestId,
@@ -460,8 +572,8 @@
         phone: form.querySelector('[name="phone"]').value.trim(),
         email: form.querySelector('[name="email"]').value.trim(),
         service: form.querySelector('[name="service"]').value || "",
-        date: form.querySelector('[name="date"]').value,
-        time: form.querySelector('[name="time"]').value,
+        date: dateVal,
+        time: (timeEl && !timeEl.disabled) ? timeEl.value : "",
         note: form.querySelector('[name="note"]').value.trim(),
         sms_consent: !!form.querySelector('[name="sms_consent"]').checked,
 
@@ -470,16 +582,35 @@
         submitted_at_iso: new Date().toISOString()
       };
 
-      if(!data.name || !data.phone || !data.email || !data.date || !data.time || !data.sms_consent){
+      // If closed/no availability
+      if(!data.date || (timeEl && timeEl.disabled)){
         status.className = "status err";
+        status.style.display = "block";
         status.textContent =
-          (lang==="en") ? "Please complete required fields and accept SMS consent."
-          : (lang==="es") ? "Completa los campos obligatorios y acepta el consentimiento SMS."
-          : "Veuillez remplir les champs obligatoires et accepter le consentement SMS.";
+          (lang==="es") ? "No hay disponibilidad para esta fecha. Elige otra fecha." :
+          (lang==="fr") ? "Aucune disponibilité pour cette date. Choisissez une autre date." :
+          "No availability for this date. Please choose another date.";
+        return false;
+      }
+
+      // required fields
+      if(!data.name || !data.phone || !data.email || !data.time || !data.sms_consent){
+        status.className = "status err";
+        status.style.display = "block";
+        status.textContent =
+          (lang==="en") ? "Please complete required fields and accept SMS consent." :
+          (lang==="es") ? "Completa los campos obligatorios y acepta el consentimiento SMS." :
+          "Veuillez remplir les champs obligatoires et accepter le consentement SMS.";
         return false;
       }
 
       btn.disabled = true;
+      status.className = "status";
+      status.style.display = "block";
+      status.textContent =
+        (lang==="en") ? "Sending request..." :
+        (lang==="es") ? "Enviando solicitud..." :
+        "Envoi en cours...";
 
       try{
         const res = await fetch(MAKE_WEBHOOK_URL, {
@@ -491,24 +622,36 @@
 
         status.className = "status ok";
         status.textContent =
-          (lang==="en") ? "Request sent! We will confirm by SMS/email."
-          : (lang==="es") ? "¡Solicitud enviada! Te confirmaremos por SMS/correo."
-          : "Demande envoyée ! Nous confirmerons par SMS/email.";
+          (lang==="en") ? "Request sent! We will confirm by SMS/email." :
+          (lang==="es") ? "¡Solicitud enviada! Te confirmaremos por SMS/correo." :
+          "Demande envoyée ! Nous confirmerons par SMS/email.";
 
         form.reset();
+
+        // New request id for next submission
+        currentRequestId = newRequestId();
         refreshRequestId();
+
+        // reset time dropdown placeholder
+        const timeEl2 = form.querySelector('[name="time"]');
+        if(timeEl2){
+          timeEl2.innerHTML = "";
+        }
       }catch(err){
         status.className = "status err";
         status.textContent =
-          (lang==="en") ? "Error sending request. Please try again."
-          : (lang==="es") ? "Error al enviar la solicitud. Intenta de nuevo."
-          : "Erreur lors de l’envoi. Réessayez.";
+          (lang==="en") ? "Error sending request. Please try again." :
+          (lang==="es") ? "Error al enviar la solicitud. Intenta de nuevo." :
+          "Erreur lors de l’envoi. Réessayez.";
         console.error(err);
       }finally{
         btn.disabled = false;
       }
       return false;
     }
+
+    // Init default language
+    setLang(localStorage.getItem("lang") || DEFAULT_LANG);
   </script>
 </body>
 </html>
