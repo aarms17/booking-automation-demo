@@ -113,8 +113,8 @@
       <section id="en">
         <h1>Book only available times</h1>
         <p>
-          Select a date to see available time slots. If a day is closed or has no availability, it will show automatically.
-          You will only receive SMS/email for confirmations and reminders — no spam.
+          Select a date to see available time slots. Closed or full days show automatically.
+          SMS/email are used only for confirmations and reminders — no spam.
         </p>
 
         <div class="row">
@@ -163,14 +163,14 @@
 
           <div style="margin-top:12px;">
             <label for="noteEn">Notes (optional)</label>
-            <textarea id="noteEn" name="note" placeholder="e.g. specific staff, multiple services, special requests..."></textarea>
+            <textarea id="noteEn" name="note" placeholder="e.g. special requests, preferred staff..."></textarea>
           </div>
 
           <div class="consent">
             <div class="consentRow">
               <input id="smsOkEn" name="sms_consent" type="checkbox" required />
               <div class="consentText">
-                <b>I agree to receive SMS</b> for <b>appointment confirmation and reminders only</b>. We do not send marketing messages.
+                <b>I agree to receive SMS</b> for <b>appointment confirmation and reminders only</b>. No marketing messages.
               </div>
             </div>
           </div>
@@ -180,7 +180,7 @@
             <button class="btn" type="button" onclick="fillExample('en')">Fill example</button>
           </div>
 
-          <div class="small">Slots are based on a 45-minute service + 15-minute buffer.</div>
+          <div class="small">Slots are based on 45 minutes + 15 minutes buffer (1-hour slots).</div>
           <div class="status" id="statusEn"></div>
         </form>
 
@@ -197,8 +197,8 @@
       <section id="es" class="hidden">
         <h1>Reserva solo horas disponibles</h1>
         <p>
-          Elige una fecha para ver horarios disponibles. Si un día está cerrado o no hay disponibilidad, aparecerá automáticamente.
-          Solo recibirás SMS/correo para confirmación y recordatorios — sin spam.
+          Elige una fecha para ver horarios disponibles. Si el día está cerrado o completo, aparecerá automáticamente.
+          SMS/correo solo para confirmación y recordatorios — sin spam.
         </p>
 
         <div class="row">
@@ -247,14 +247,14 @@
 
           <div style="margin-top:12px;">
             <label for="noteEs">Nota (opcional)</label>
-            <textarea id="noteEs" name="note" placeholder="Ej: quiero con X persona, varios servicios, etc."></textarea>
+            <textarea id="noteEs" name="note" placeholder="Ej: preferencia de persona, varios servicios, etc."></textarea>
           </div>
 
           <div class="consent">
             <div class="consentRow">
               <input id="smsOkEs" name="sms_consent" type="checkbox" required />
               <div class="consentText">
-                <b>Acepto recibir SMS</b> solo para <b>confirmación y recordatorios</b>. No enviamos mensajes de marketing.
+                <b>Acepto recibir SMS</b> solo para <b>confirmación y recordatorios</b>. No enviamos marketing.
               </div>
             </div>
           </div>
@@ -264,7 +264,7 @@
             <button class="btn" type="button" onclick="fillExample('es')">Llenar ejemplo</button>
           </div>
 
-          <div class="small">Los horarios usan 45 min de servicio + 15 min de buffer.</div>
+          <div class="small">Horarios basados en 45 min + 15 min de buffer (slots de 1 hora).</div>
           <div class="status" id="statusEs"></div>
         </form>
 
@@ -281,7 +281,7 @@
       <section id="fr" class="hidden">
         <h1>Choisissez seulement des heures disponibles</h1>
         <p>
-          Choisissez une date pour voir les créneaux disponibles. Si un jour est fermé ou complet, cela s’affiche automatiquement.
+          Choisissez une date pour voir les créneaux disponibles. Si le jour est fermé ou complet, cela s’affiche automatiquement.
           SMS/email uniquement pour confirmation et rappels — pas de spam.
         </p>
 
@@ -331,14 +331,14 @@
 
           <div style="margin-top:12px;">
             <label for="noteFr">Note (optionnel)</label>
-            <textarea id="noteFr" name="note" placeholder="ex: personnel spécifique, plusieurs services, etc."></textarea>
+            <textarea id="noteFr" name="note" placeholder="ex: demandes spéciales, personnel préféré..."></textarea>
           </div>
 
           <div class="consent">
             <div class="consentRow">
               <input id="smsOkFr" name="sms_consent" type="checkbox" required />
               <div class="consentText">
-                <b>J’accepte de recevoir des SMS</b> uniquement pour <b>confirmation et rappels</b>. Aucun message marketing.
+                <b>J’accepte de recevoir des SMS</b> uniquement pour <b>confirmation et rappels</b>. Pas de marketing.
               </div>
             </div>
           </div>
@@ -348,7 +348,7 @@
             <button class="btn" type="button" onclick="fillExample('fr')">Remplir exemple</button>
           </div>
 
-          <div class="small">Créneaux basés sur 45 min + 15 min de buffer.</div>
+          <div class="small">Créneaux basés sur 45 min + 15 min de buffer (1 heure).</div>
           <div class="status" id="statusFr"></div>
         </form>
 
@@ -374,11 +374,12 @@
     const TIME_ZONE = "America/Montreal";
     const DEFAULT_LANG = "en";
 
-    // Business hours + slot rules
     // 45 min service + 15 min buffer = 60 min slots
     const SLOT_MINUTES = 60;
+
+    // Business hours
+    // 0=Sun ... 6=Sat
     const HOURS = {
-      // 0=Sun ... 6=Sat
       1: { start: "09:00", end: "19:00" }, // Mon
       2: { start: "09:00", end: "19:00" }, // Tue
       3: { start: "09:00", end: "19:00" }, // Wed
@@ -398,7 +399,7 @@
       localStorage.setItem("lang", l);
       document.documentElement.lang = l;
 
-      // refresh request id display and time dropdown for the active language
+      // refresh request id and time dropdown in the active language
       refreshRequestId();
       const f = getForm(l);
       const dateEl = f.querySelector('[name="date"]');
@@ -440,12 +441,11 @@
     }
     let currentRequestId = newRequestId();
     function refreshRequestId(){
-      // Keep current ID until submission; only show it across languages
       ["en","es","fr"].forEach(l => reqSpan(l).textContent = currentRequestId);
     }
     refreshRequestId();
 
-    // ===== Slots (no overlaps) =====
+    // ===== Slots =====
     function toMinutes(hhmm){
       const [h,m] = hhmm.split(":").map(Number);
       return h*60 + m;
@@ -471,6 +471,7 @@
       }
       return slots;
     }
+
     function fillTimeSelect(selectEl, dateStr, lang){
       const slots = buildSlotsForDate(dateStr);
 
@@ -505,9 +506,14 @@
         opt.textContent = s;
         selectEl.appendChild(opt);
       }
+
+      // ✅ IMPORTANT: auto-select first real slot so form is valid
+      if(selectEl.options.length > 1){
+        selectEl.selectedIndex = 1;
+      }
     }
 
-    // Hook date changes for all languages
+    // Update slots on date change for all languages
     ["en","es","fr"].forEach(lang => {
       const f = getForm(lang);
       const dateEl = f.querySelector('[name="date"]');
@@ -533,13 +539,8 @@
       f.querySelector('[name="service"]').value = (lang==="fr") ? "Coupe" : (lang==="es" ? "Corte" : "Haircut");
       f.querySelector('[name="date"]').value = `${yyyy}-${mm}-${dd}`;
 
-      // fill slots for that date and pick first available
       const timeEl = f.querySelector('[name="time"]');
       fillTimeSelect(timeEl, `${yyyy}-${mm}-${dd}`, lang);
-      // choose first real slot if exists
-      if(timeEl && timeEl.options.length > 1 && !timeEl.disabled){
-        timeEl.selectedIndex = 1;
-      }
 
       f.querySelector('[name="note"]').value =
         (lang==="fr") ? "Première visite. Merci de confirmer la disponibilité."
@@ -556,10 +557,11 @@
       const status = getStatus(lang);
       const btn = getSendBtn(lang);
 
-      // Ensure time dropdown is valid
       const dateVal = form.querySelector('[name="date"]').value;
       const timeEl = form.querySelector('[name="time"]');
-      if(timeEl){
+
+      // If time select not yet filled, fill it
+      if(timeEl && timeEl.options.length <= 1){
         fillTimeSelect(timeEl, dateVal, lang);
       }
 
@@ -582,7 +584,7 @@
         submitted_at_iso: new Date().toISOString()
       };
 
-      // If closed/no availability
+      // No availability (closed/full)
       if(!data.date || (timeEl && timeEl.disabled)){
         status.className = "status err";
         status.style.display = "block";
@@ -593,14 +595,14 @@
         return false;
       }
 
-      // required fields
+      // Required validation (includes time + consent)
       if(!data.name || !data.phone || !data.email || !data.time || !data.sms_consent){
         status.className = "status err";
         status.style.display = "block";
         status.textContent =
-          (lang==="en") ? "Please complete required fields and accept SMS consent." :
           (lang==="es") ? "Completa los campos obligatorios y acepta el consentimiento SMS." :
-          "Veuillez remplir les champs obligatoires et accepter le consentement SMS.";
+          (lang==="fr") ? "Veuillez remplir les champs obligatoires et accepter le consentement SMS." :
+          "Please complete required fields and accept SMS consent.";
         return false;
       }
 
@@ -608,9 +610,9 @@
       status.className = "status";
       status.style.display = "block";
       status.textContent =
-        (lang==="en") ? "Sending request..." :
         (lang==="es") ? "Enviando solicitud..." :
-        "Envoi en cours...";
+        (lang==="fr") ? "Envoi en cours..." :
+        "Sending request...";
 
       try{
         const res = await fetch(MAKE_WEBHOOK_URL, {
@@ -622,9 +624,9 @@
 
         status.className = "status ok";
         status.textContent =
-          (lang==="en") ? "Request sent! We will confirm by SMS/email." :
           (lang==="es") ? "¡Solicitud enviada! Te confirmaremos por SMS/correo." :
-          "Demande envoyée ! Nous confirmerons par SMS/email.";
+          (lang==="fr") ? "Demande envoyée ! Nous confirmerons par SMS/email." :
+          "Request sent! We will confirm by SMS/email.";
 
         form.reset();
 
@@ -632,17 +634,19 @@
         currentRequestId = newRequestId();
         refreshRequestId();
 
-        // reset time dropdown placeholder
+        // Clear time dropdown after reset
         const timeEl2 = form.querySelector('[name="time"]');
         if(timeEl2){
           timeEl2.innerHTML = "";
+          timeEl2.disabled = false;
         }
+
       }catch(err){
         status.className = "status err";
         status.textContent =
-          (lang==="en") ? "Error sending request. Please try again." :
           (lang==="es") ? "Error al enviar la solicitud. Intenta de nuevo." :
-          "Erreur lors de l’envoi. Réessayez.";
+          (lang==="fr") ? "Erreur lors de l’envoi. Réessayez." :
+          "Error sending request. Please try again.";
         console.error(err);
       }finally{
         btn.disabled = false;
@@ -650,7 +654,7 @@
       return false;
     }
 
-    // Init default language
+    // Init language
     setLang(localStorage.getItem("lang") || DEFAULT_LANG);
   </script>
 </body>
